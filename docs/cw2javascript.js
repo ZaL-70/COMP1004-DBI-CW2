@@ -17,6 +17,7 @@ button.addEventListener("click", updateParagraph);
 
 const paragraph = document.getElementById("output");
 
-function updateParagraph() {
-    paragraph.textContent = "I did this";
+async function updateParagraph() {
+     const { data, error } = await supabase.from('Vehicles').select();
+     paragraph.textContent = data
 }
