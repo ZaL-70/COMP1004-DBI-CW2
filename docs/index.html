@@ -4,26 +4,35 @@
         <meta charset="utf-8" />
         <title>People Search</title>
         <link rel="stylesheet" href="cw2styles.css" />
-        <script src="cw2javascript.js" type="module"></script>
+        <script src="cw2javascript.js" type="module" defer></script>
     </head>
-    <div class = "wrapper">
+    <div class="wrapper">
         <header>
             <h1>People Search</h1>
-            <ul class = nav>
+            <ul class="nav">
                 <li><a href='index.html'>People search</a></li>
                 <li><a href='vehicle-search.html'>Vehicle search</a></li>
                 <li><a href='add-vehicle.html'>Add a vehicle</a></li>
             </ul>
         </header>
         <main>
-            <p>Insert main contents</p>
-            <ul>
-                <li>testing</li>
-                <li>testing</li>
-            </ul>
+            <p>
+                <label for="driverName">Search by driver name:</label>
+                <input type="text" id="driverName" name="driverName">
+            </p>
+            <p>
+                <label for="licenseNum">Search by driving license number:</label>
+                <input type="text" id="licenseNum" name="licenseNum">
+            </p>
+            <p>
+                <button type="button">Submit</button>
+            </p>
+            <p id="output">
+                resuslts
+            </p>
         </main>
         <aside>
-            <p>Add image here</p>
+            <img src='imgs/mogged.png'>
         </aside>
         <footer>
             <p>Website made by Zal for COMP1004 DBI CW2. People search page (startup page)</p>

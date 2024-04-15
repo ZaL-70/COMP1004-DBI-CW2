@@ -56,3 +56,8 @@ footer {
 header ul li {
     list-style-type: none;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
