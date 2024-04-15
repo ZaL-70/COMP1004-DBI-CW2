@@ -19,5 +19,5 @@ const paragraph = document.getElementById("output");
 
 async function updateParagraph() {
      const { data, error } = await supabase.from('Vehicles').select();
-     paragraph.textContent = JSON.stringify(data);
+     paragraph.textContent = "Name:", JSON.stringify(data);
 }
