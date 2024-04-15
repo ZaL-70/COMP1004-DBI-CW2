@@ -6,6 +6,8 @@ const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhb
 // Fetch data from the table
 async function fetchData() {
     const { data, error } = await supabase.from('Vehicles').select();
+    const paragraph = document.getElementById("output");
+    paragraph.textContent = "Fetched data", data
     console.log('Fetched data:', data);
 }
 // Call the fetchData function to retrieve data
@@ -15,7 +17,7 @@ fetchData();
 // const button = document.querySelector("button");
 // button.addEventListener("click", updateParagraph);
 
-// const paragraph = document.getElementById("output");
+//
 
 // function updateParagraph() {
 //     paragraph.textContent = "I did this";
