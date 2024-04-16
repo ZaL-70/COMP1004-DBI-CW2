@@ -29,6 +29,7 @@ async function updateResults() {
          if (person.Name.includes(driverName) && driverName !== "") {
              found = true;
              console.log(person.Name);
+             console.log(person.PersonID);
              const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", person.Name);
              const results = document.createElement("p");
              results.id = "searchResults";
