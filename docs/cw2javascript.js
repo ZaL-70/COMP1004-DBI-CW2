@@ -6,13 +6,13 @@ const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhb
 const submitBtn = document.getElementById("submitBtn");
 submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
-const results = document.getElementById("results"); // Results output textbox
-
-let foundPerson = null; // Initialize foundPerson variable outside the loop
+//const results = document.getElementById("results"); // Results output textbox
 
 async function updateResults() {
+     let driverName = ""
+     let foundPerson = null; // Initialize foundPerson variable outside the loop
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     let driverName = driverNameElement.value;
+     driverName = driverNameElement.value;
  
      const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
  
@@ -27,8 +27,14 @@ async function updateResults() {
  
      if (foundPerson !== null) { // Check if a person was found
          const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", foundPerson.Name);
-         results.value = JSON.stringify(output);
+         const sect = document.querySelector("main");
+         const results = document.createElement("p");
+         results.textContent = JSON.stringify(output)
+         //results.value = JSON.stringify(output);
      } else {
-         results.value = "No matches";
+          const sect = document.querySelector("main");
+         const results = document.createElement("p");
+         results.textContent = "No matches found";
+         //results.value = "No matches";
      }
  }
