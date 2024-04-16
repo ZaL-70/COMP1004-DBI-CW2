@@ -30,7 +30,7 @@ async function updateResults() {
      if(arrPeople.length > 0) {
           found = true;
           const results = document.createElement("ul");
-          results.class = "searchResult";
+          results.className = "searchResult";
                
           for (const person of arrPeople) {
                // Create <li> elements for each field and populate them with the field value
@@ -46,7 +46,7 @@ async function updateResults() {
 
      if (found === false) {
           const results = document.createElement("p");
-          results.id = "searchResult";
+          results.className = "searchResult";
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
