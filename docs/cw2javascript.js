@@ -9,6 +9,7 @@ submitBtn.addEventListener("click", updateResults); // Add listener to button
 async function updateResults() {
      let found = false;
      let driverName = "";
+     let licenseNum = "";
      // Remove all existing search results
      const existingResults = document.querySelectorAll("#searchResult");
      existingResults.forEach(result => {
@@ -17,17 +18,21 @@ async function updateResults() {
 
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
-     // Create variable for users query (for person name)
+     // Get input query for name
      const driverNameElement = document.getElementById("driverName"); // Get user input
      driverName = driverNameElement.value.trim().toLowerCase();
+     // Get input query for license number
+     const licenseNumElement = document.getElementById("licenseNum"); // Get user input
+     licenseNum = licenseNumElement.value.trim().toLowerCase();
  
-     const { data: arrNames, error: nameSelError } = await supabase
+     const { data: arrQuery, error: nameSelError } = await supabase
           .from("People")
-          .select("Name"); // Get name data
+          .select("Name", "LicenseNumber"); // Get name data
      // Check if the input is a substring of any name
-     for (const pName of arrNames) {
-          pNameLower = pName.Name.toLowerCase();
-          if (pNameLower.includes(driverName) && driverName !== "") {
+     for (const pQuery of arrQuery) {
+          pNameLower = pQuery.Name.toLowerCase();
+          pLicenseNumLower = pQuery.LicenseNum.toLowerCase();
+          if ((pNameLower.includes(driverName) && driverName !== "") || (pNameLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
                const results = document.createElement("ul");
