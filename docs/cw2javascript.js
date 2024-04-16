@@ -9,52 +9,47 @@ submitBtn.addEventListener("click", updateResults); // Add listener to button
 async function updateResults() {
      let found = false;
      let driverName = "";
-     let licenseNum = "";
      // Remove all existing search results
-     const existingResults = document.querySelectorAll(".searchResult");
+     const existingResults = document.querySelectorAll("#searchResult");
      existingResults.forEach(result => {
           result.remove();
      });
 
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
-     // Get user query for name
-     const driverNameElement = document.getElementById("driverName");
+     // Create variable for users query (for person name)
+     const driverNameElement = document.getElementById("driverName"); // Get user input
      driverName = driverNameElement.value.trim().toLowerCase();
-     // Get user query for license number
-     const licenseNumberElement = document.getElementById("licenseNum");
-     licenseNum = licenseNumberElement.value.trim().toLowerCase();
-
-     // Check if both driverName and licenseNum are provided
-     if (driverName !== "" || licenseNum !== "") {
-         const { data: arrPeople, error: allSelError } = await supabase
-             .from("People")
-             .select()
-             .or(`Name.ilike('${driverName}%')`, `LicenseNumber.ilike('%${licenseNum}%')`);
-         
-         // Check if the input is a substring of any name
-         if (arrPeople.length > 0) {
-              found = true;
-              const results = document.createElement("ul");
-              results.className = "searchResult";
-                   
-              for (const person of arrPeople) {
-                   // Create <li> elements for each field and populate them with the field value
-                   const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
-                   fields.forEach(field => {
-                        const li = document.createElement("li");
-                        li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                        results.appendChild(li); // Append <li> to <ul>
-                   });
-              }
-              mainSect.appendChild(results); // Append search result <ul> to main section
-         }
+ 
+     const { data: arrNames, error: nameSelError } = await supabase
+          .from("People")
+          .select("Name"); // Get name data
+     // Check if the input is a substring of any name
+     for (const pName of arrNames) {
+          pNameLower = pName.Name.toLowerCase();
+          if (pNameLower.includes(driverName) && driverName !== "") {
+               found = true;
+               const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
+               const results = document.createElement("ul");
+               results.id = "searchResult";
+               
+               for (const person of arrPeople) {
+                    // Create <li> elements for each field and populate them with the field value
+                    const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
+                    fields.forEach(field => {
+                         const li = document.createElement("li");
+                         li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
+                         results.appendChild(li); // Append <li> to <ul>
+                    });
+               }
+               mainSect.appendChild(results); // Append search result <div> to main section
+          }
      }
 
      if (found === false) {
           const results = document.createElement("p");
-          results.className = "searchResult";
+          results.id = "searchResult";
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
-}
+ }
