@@ -19,29 +19,36 @@ async function updateResults() {
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
      // Get user query for name
-     const driverNameElement = document.getElementById("driverName"); // Get user input
+     const driverNameElement = document.getElementById("driverName");
      driverName = driverNameElement.value.trim().toLowerCase();
-     // Get user query for license numeber
-     const licenseNumberElement = document.getElementById("licenseNum"); // Get user input
+     // Get user query for license number
+     const licenseNumberElement = document.getElementById("licenseNum");
      licenseNum = licenseNumberElement.value.trim().toLowerCase();
- 
-     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.("${driverName}%"), LicenseNumber.ilike.("%${licenseNum}%")`);
-     // Check if the input is a substring of any name
-     if(arrPeople.length > 0) {
-          found = true;
-          const results = document.createElement("ul");
-          results.className = "searchResult";
-               
-          for (const person of arrPeople) {
-               // Create <li> elements for each field and populate them with the field value
-               const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
-               fields.forEach(field => {
-                    const li = document.createElement("li");
-                    li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                    results.appendChild(li); // Append <li> to <ul>
-               });
-          }
-          mainSect.appendChild(results); // Append search result <div> to main section
+
+     // Check if both driverName and licenseNum are provided
+     if (driverName !== "" || licenseNum !== "") {
+         const { data: arrPeople, error: allSelError } = await supabase
+             .from("People")
+             .select()
+             .or(`Name.ilike('${driverName}%')`, `LicenseNumber.ilike('%${licenseNum}%')`);
+         
+         // Check if the input is a substring of any name
+         if (arrPeople.length > 0) {
+              found = true;
+              const results = document.createElement("ul");
+              results.className = "searchResult";
+                   
+              for (const person of arrPeople) {
+                   // Create <li> elements for each field and populate them with the field value
+                   const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
+                   fields.forEach(field => {
+                        const li = document.createElement("li");
+                        li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
+                        results.appendChild(li); // Append <li> to <ul>
+                   });
+              }
+              mainSect.appendChild(results); // Append search result <ul> to main section
+         }
      }
 
      if (found === false) {
@@ -50,4 +57,4 @@ async function updateResults() {
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
- }
+}
