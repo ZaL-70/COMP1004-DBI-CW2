@@ -11,7 +11,7 @@ async function updateResults() {
      let driverName = "";
      let licenseNum = "";
      // Remove all existing search results
-     const existingResults = document.querySelectorAll("#searchResult");
+     const existingResults = document.querySelectorAll(".searchResult");
      existingResults.forEach(result => {
           result.remove();
      });
@@ -25,12 +25,12 @@ async function updateResults() {
      const licenseNumberElement = document.getElementById("licenseNum"); // Get user input
      licenseNum = licenseNumberElement.value.trim().toLowerCase();
  
-     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.${driverName}, LicenseNumber.ilike.${licenseNum}`);
+     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.("${driverName}%"), LicenseNumber.ilike.("%${licenseNum}%")`);
      // Check if the input is a substring of any name
      if(arrPeople.length > 0) {
           found = true;
           const results = document.createElement("ul");
-          results.id = "searchResult";
+          results.class = "searchResult";
                
           for (const person of arrPeople) {
                // Create <li> elements for each field and populate them with the field value
