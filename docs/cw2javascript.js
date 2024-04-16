@@ -3,12 +3,11 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 // Create a single supabase client for interacting with your database
 const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZ3Fsc2NjbXNwcGdiYW55c2tvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTA5MzcsImV4cCI6MjAyODQyNjkzN30.JFGokF0fDv9XndLlUIEwSu6b3U02gzY3dd0qhyr6Znw");
 
-const btnPeopleQuery = document.getElementById("btnPeopleQuery");
+const btnPeopleQuery = document.querySelector("btnPeopleQuery");
 btnPeopleQuery.addEventListener("click", updatePeopleResults); // Add listener to people query button
 
-const btnVehicleQuery = document.getElementById("btnVehicleQuery");
+const btnVehicleQuery = document.querySelector("btnVehicleQuery");
 btnVehicleQuery.addEventListener("click", updateVehicleResults); // Add listener to people vehicle
-
 
 async function updatePeopleResults() {
      let found = false;
