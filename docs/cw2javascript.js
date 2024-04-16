@@ -79,13 +79,13 @@ async function updateVehicleResults() {
  
      const { data: arrVQuery, error: nameSelError } = await supabase
           .from("Vehicles")
-          .select("VehicleID"); // Get name/license number data
+          .select(); // Get name/license number data
      // Check if the input is a substring of any name
      for (const vQuery of arrVQuery) {
           let vRegNum = vQuery.VehicleID.toLowerCase();
           if (vRegNum.includes(regNum) && regNum !== "") {
                found = true;
-               const { data: arrVehicles, error: allSelError } = await supabase.from("Vehicles").select().eq("Vehicle", vQuery.VehicleID);
+               const { data: arrVehicles, error: allSelError } = await supabase.from("Vehicles").select().eq("VehicleID", vQuery.VehicleID);
                const results = document.createElement("ul");
                results.id = "searchResultVehicle";
                
