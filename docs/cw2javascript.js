@@ -26,8 +26,8 @@ async function updateResults() {
           .select("Name"); // Get name data
      // Check if the input is a substring of any name
      for (const pName of arrNames) {
-          pNameLower = pName.Name.toLowerCase();
-          if (pNameLower.includes(driverName) && driverName !== "") {
+          let pNameLower = pName.Name.toLowerCase();
+          if ((pNameLower.includes(driverName) && driverName !== "")) {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
                const results = document.createElement("ul");
