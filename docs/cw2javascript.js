@@ -17,7 +17,7 @@ async function updateResults() {
      const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
  
      for (const person of arrNames) { // Check if the input is a substring of any name
-         if (person.Name.includes(driverName)) {
+         if (person.Name.includes(driverName) && driverName !== "") {
              foundPerson = person; // Set variable to full name (to be used for select condition)
              break;
          }
@@ -27,15 +27,8 @@ async function updateResults() {
  
      if (foundPerson !== null) { // Check if a person was found
          const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", foundPerson.Name);
-         results.value = JSON.stringify(output); // Just an example, format as per your requirement
+         results.value = JSON.stringify(output);
      } else {
          results.value = "No matches";
      }
  }
-
-// let licenseNum = document.getElementById("licenseNum");
-
-// async function fetchPeopleData() {
-//      const { data: arrPeople, error } = await supabase.from("People").select("Name")
-//      results.value = JSON.stringify(arrPeople);
-// }
