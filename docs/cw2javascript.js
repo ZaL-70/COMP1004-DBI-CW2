@@ -12,7 +12,7 @@ async function updateResults() {
      
      const { arrNames, nameSelError } = await supabase.from("People").select("Name"); // Get name data
      
-     for (const person in arrNames) {    // Check if the input is a substring of any name
+     for (const person of arrNames) {    // Check if the input is a substring of any name
           if (person.includes(driverName)) {
                driverName = person;     // Set variable to full name (to be used for select condition)
           }
