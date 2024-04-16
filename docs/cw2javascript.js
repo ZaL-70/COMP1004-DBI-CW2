@@ -30,11 +30,13 @@ async function updateResults() {
          const sect = document.querySelector("main");
          const results = document.createElement("p");
          results.textContent = JSON.stringify(output)
+         sect.appendChild(results);
          //results.value = JSON.stringify(output);
      } else {
           const sect = document.querySelector("main");
          const results = document.createElement("p");
          results.textContent = "No matches found";
+         sect.appendChild(results);
          //results.value = "No matches";
      }
  }
