@@ -8,9 +8,9 @@ submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
 async function updateResults() {
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     let driverName = driverNameElement.nodeValue;
+     let driverName = driverNameElement.value;
      
-     const { arrNames, nameSelError } = await supabase.from("People").select("Name") // Get name data
+     const { arrNames, nameSelError } = await supabase.from("People").select("Name"); // Get name data
      
      for (const person in arrNames) {    // Check if the input is a substring of any name
           if (person.includes(driverName)) {
@@ -18,7 +18,9 @@ async function updateResults() {
           }
      }
      // Get output data for specified name
-     const { output, allSelError } = await supabase.from("People").select().eq("Name", driverName)
+     const { output, allSelError } = await supabase.from("People").select().eq("Name", driverName);
+     const results = document.getElementById("results");
+     results.value = output;
 }
 
 // let licenseNum = document.getElementById("licenseNum");
