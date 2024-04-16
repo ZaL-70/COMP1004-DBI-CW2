@@ -10,21 +10,26 @@ async function updateResults() {
      const driverNameElement = document.getElementById("driverName"); // Get user input
      let driverName = driverNameElement.value;
      
-     const { arrNames, nameSelError } = await supabase.from("People").select("Name"); // Get name data
+     const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
      
      for (const person of arrNames) {    // Check if the input is a substring of any name
-          if (person.includes(driverName)) {
-               driverName = person;     // Set variable to full name (to be used for select condition)
+          if (person.Name.includes(driverName)) {
+               driverName = person.Name;     // Set variable to full name (to be used for select condition)
+               break;
           }
      }
      // Get output data for specified name
 
      console.log(driverName)
 
-     const { output, allSelError } = await supabase.from("People").select().eq("Name", driverName);
+     const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", driverName);
      const results = document.getElementById("results");
-     console.log(output)
-     results.value += output;
+     if (output.length > 0) {
+          // Format the output before displaying
+          results.value = JSON.stringify(output[0]); // Just an example, format as per your requirement
+      } else {
+          results.value = "No results found";
+      }
 }
 
 // let licenseNum = document.getElementById("licenseNum");
