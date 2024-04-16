@@ -40,5 +40,5 @@ async function fetchPeopleData() {
      const { data: arrPeople, error } = await supabase
      .from("People")
      .select("Name")
-     results.value = JSON.stringify(arrPeople);
+     results.value = JSON.stringify(data);
 }
