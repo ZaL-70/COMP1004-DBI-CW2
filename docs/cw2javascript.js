@@ -6,6 +6,10 @@ const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhb
 const btnPeopleQuery = document.getElementById("btnPeopleQuery");
 btnPeopleQuery.addEventListener("click", updatePeopleResults); // Add listener to people query button
 
+const btnVehicleQuery = document.getElementById("btnVehicleQuery");
+btnVehicleQuery.addEventListener("click", updateVehicleResults); // Add listener to people vehicle
+
+
 async function updatePeopleResults() {
      let found = false;
      let driverName = "";
@@ -58,9 +62,6 @@ async function updatePeopleResults() {
           mainSect.appendChild(results); // Append corresponding results
      } 
  }
-
-const btnVehicleQuery = document.getElementById("btnVehicleQuery");
-btnVehicleQuery.addEventListener("click", updateVehicleResults); // Add listener to people vehicle
 
 async function updateVehicleResults() {
      let found = false;
