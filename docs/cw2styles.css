@@ -4,19 +4,22 @@ html {
 body {
     display: grid;
     background-color: #002096e1;
+    border-radius: 15px;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: auto auto auto;
     gap: 5px;
+
 }
 
 header {
-    background-color: #bda00d; 
+    background-color: #bda00d;
+    border-radius: 15px;
     grid-column: 1 / 3;
     grid-row: 1; 
     text-align: center;
     border: 5px solid #ffffff;
     padding: 0;
-    margin: .25em;
+    margin: .35em;
 }
 
 main {
@@ -39,6 +42,7 @@ aside {
 
 footer {
     background-color: #bda00d;
+    border-radius: 10px;
     grid-column: 1 / 3;
     grid-row: 3 ;
     border: 4px solid #ffffff;

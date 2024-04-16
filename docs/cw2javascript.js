@@ -4,15 +4,34 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZ3Fsc2NjbXNwcGdiYW55c2tvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTA5MzcsImV4cCI6MjAyODQyNjkzN30.JFGokF0fDv9XndLlUIEwSu6b3U02gzY3dd0qhyr6Znw");
 
 const submitBtn = document.getElementById("submitBtn");
-submitBtn.addEventListener("click", updateParagraph);
+submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
-const paragraph = document.getElementById("output");
-
-async function updateParagraph() {
-     const { data, error } = await supabase.from('People').select();
-     try {
-          paragraph.textContent = "Name:" + JSON.stringify(data);
-     } catch (error) {
-          paragraph.textContent = "Error"
+async function updateResults() {
+     let driverName = document.getElementById("driverName"); // Get user input
+     
+     const { arrNames, nameSelError } = await supabase.from("People").select("Name") // Get name data
+     
+     for (const person in arrNames) {    // Check if the input is a substring of any name
+          if (person.includes(driverName)) {
+               driverName = person;     // Set variable to full name (to be used for select condition)
+          }
      }
+     // Get output data for specified name
+     const { output, allSelError } = await supabase.from("People").select().eq("Name", driverName)
 }
+
+// let licenseNum = document.getElementById("licenseNum");
+
+// const results = document.getElementById("results");
+
+// async function fetchPeopleData() {
+//      try {
+//           const { arrPeople, error } = await supabase
+//           .from("People")
+//           .select()
+//      } catch (error) {
+//           results.textContent = ("Error Fetching");
+//      }
+// }
+
+// fetchPeopleData();
