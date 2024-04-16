@@ -27,11 +27,11 @@ async function updateResults() {
  
      const { data: arrQuery, error: nameSelError } = await supabase
           .from("People")
-          .select("Name", "LicenseNumber"); // Get name data
+          .select("Name", "LicenseNumber"); // Get name/license number data
      // Check if the input is a substring of any name
      for (const pQuery of arrQuery) {
           let pNameLower = pQuery.Name.toLowerCase();
-          let pLicenseNumLower = pQuery.LicenseNum.toLowerCase();
+          let pLicenseNumLower = pQuery.LicenseNumber.toLowerCase();
           if ((pNameLower.includes(driverName) && driverName !== "") || (pLicenseNumLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNum);
