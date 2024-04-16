@@ -4,10 +4,9 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpZ3Fsc2NjbXNwcGdiYW55c2tvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTA5MzcsImV4cCI6MjAyODQyNjkzN30.JFGokF0fDv9XndLlUIEwSu6b3U02gzY3dd0qhyr6Znw");
 
 const submitBtn = document.getElementById("submitBtn");
-submitBtn.addEventListener("click", updateResults);    // Add listener to button
+submitBtn.addEventListener("click", updateResults); // Add listener to button
 
 async function updateResults() {
-     //let foundPerson = null; // Initialize foundPerson variable outside the loop
      let found = false;
      let driverName = "";
      // Remove all existing search results
