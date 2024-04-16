@@ -8,13 +8,14 @@ submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
 const results = document.getElementById("results"); // Results output textbox
 
+let foundPerson = null; // Initialize foundPerson variable outside the loop
+
 async function updateResults() {
      const driverNameElement = document.getElementById("driverName"); // Get user input
      let driverName = driverNameElement.value;
  
      const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
  
-     let foundPerson = null; // Initialize foundPerson variable outside the loop
      for (const person of arrNames) { // Check if the input is a substring of any name
          if (person.Name.includes(driverName)) {
              foundPerson = person; // Set variable to full name (to be used for select condition)
