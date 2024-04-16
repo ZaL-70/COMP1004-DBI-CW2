@@ -11,26 +11,26 @@ const results = document.getElementById("results"); // Results output textbox
 async function updateResults() {
      const driverNameElement = document.getElementById("driverName"); // Get user input
      let driverName = driverNameElement.value;
-     
+ 
      const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
-     
-     let foundPerson = "";
-     for (const person of arrNames) {    // Check if the input is a substring of any name
-          if (person.Name.includes(driverName)) {
-               foundPerson = person;     // Set variable to full name (to be used for select condition)
-               break;
-          }
+ 
+     let foundPerson = null; // Initialize foundPerson variable outside the loop
+     for (const person of arrNames) { // Check if the input is a substring of any name
+         if (person.Name.includes(driverName)) {
+             foundPerson = person; // Set variable to full name (to be used for select condition)
+             break;
+         }
      }
-     // Get output data for specified name
-
+ 
      console.log(foundPerson);
-
-     const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", driverName);
-     results.value = JSON.stringify(output); // Just an example, format as per your requirement
-     if(foundPerson == null) {
-          results.value = "No matches"
+ 
+     if (foundPerson !== null) { // Check if a person was found
+         const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", foundPerson.Name);
+         results.value = JSON.stringify(output); // Just an example, format as per your requirement
+     } else {
+         results.value = "No matches";
      }
-}
+ }
 
 // let licenseNum = document.getElementById("licenseNum");
 
