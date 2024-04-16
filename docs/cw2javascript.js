@@ -27,8 +27,8 @@ async function updateResults() {
      // Check if the input is a substring of any name
      for (const person of arrNames) {
          if (person.Name.includes(driverName) && driverName !== "") {
-             //foundPerson = person; // Set variable to full name (to be used for select condition)
-             found = true
+             found = true;
+             console.log(person.Name);
              const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", person.Name);
              const results = document.createElement("p");
              results.id = "searchResults";
@@ -36,11 +36,12 @@ async function updateResults() {
              mainSect.appendChild(results); // Append corresponding results
          }
      }
-      
+
      if (found === false) {
-         const sect = document.querySelector("main");
-         results.textContent = "No matches found";
-         mainSect.appendChild(results); // Append corresponding results
+          const results = document.createElement("p");
+          results.id = "searchResults";
+          results.textContent = "No matches found";
+          mainSect.appendChild(results); // Append corresponding results
      }
      
  }
