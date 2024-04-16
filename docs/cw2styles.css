@@ -1,7 +1,7 @@
 html {
     background-color: #d30000;
 }
-.wrapper {
+body {
     display: grid;
     background-color: #002096e1;
     grid-template-columns: 1fr 4fr;
