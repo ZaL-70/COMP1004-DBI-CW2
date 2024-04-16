@@ -9,6 +9,7 @@ submitBtn.addEventListener("click", updateResults);    // Add listener to button
 async function updateResults() {
      //let foundPerson = null; // Initialize foundPerson variable outside the loop
      let found = false;
+     let driverName = "";
      // Remove all existing search results
      const existingResults = document.querySelectorAll("#searchResults");
      existingResults.forEach(result => {
@@ -21,7 +22,7 @@ async function updateResults() {
      results.id = "searchResults";
      // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     let driverName = driverNameElement.value.trim();
+     driverName = driverNameElement.value.trim();
  
      const { data: arrNames, error: nameSelError } = await supabase
           .from("People")
