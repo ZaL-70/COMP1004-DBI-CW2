@@ -18,9 +18,13 @@ async function updateResults() {
           }
      }
      // Get output data for specified name
+
+     console.log(driverName)
+
      const { output, allSelError } = await supabase.from("People").select().eq("Name", driverName);
      const results = document.getElementById("results");
-     results.value = output;
+     console.log(output)
+     results.value += output;
 }
 
 // let licenseNum = document.getElementById("licenseNum");
