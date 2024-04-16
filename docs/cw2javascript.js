@@ -6,37 +6,41 @@ const supabase = createClient("https://digqlsccmsppgbanysko.supabase.co", "eyJhb
 const submitBtn = document.getElementById("submitBtn");
 submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
-//const results = document.getElementById("results"); // Results output textbox
-
 async function updateResults() {
-     let driverName = ""
-     let foundPerson = null; // Initialize foundPerson variable outside the loop
+     //let foundPerson = null; // Initialize foundPerson variable outside the loop
+     let found = false;
+     // Remove all existing search results
+     const existingResults = document.querySelectorAll("#searchResults");
+     existingResults.forEach(result => {
+          result.remove();
+     });
+
+     // Declare result variables to append to DOM
+     const mainSect = document.querySelector("main");
+     const results = document.createElement("p");
+     results.id = "searchResults";
+     // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     driverName = driverNameElement.value;
+     driverName = driverNameElement.value.trim();
  
-     const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
- 
-     for (const person of arrNames) { // Check if the input is a substring of any name
+     const { data: arrNames, error: nameSelError } = await supabase
+          .from("People")
+          .select("Name"); // Get name data
+     // Check if the input is a substring of any name
+     for (const person of arrNames) {
          if (person.Name.includes(driverName) && driverName !== "") {
-             foundPerson = person; // Set variable to full name (to be used for select condition)
-             break;
+             //foundPerson = person; // Set variable to full name (to be used for select condition)
+             found = true
+             const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", person.Name);
+             results.textContent = JSON.stringify(output);
+             mainSect.appendChild(results); // Append corresponding results
          }
      }
- 
-     console.log(foundPerson);
- 
-     if (foundPerson !== null) { // Check if a person was found
-         const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", foundPerson.Name);
+      
+     if (found === false) {
          const sect = document.querySelector("main");
-         const results = document.createElement("p");
-         results.textContent = JSON.stringify(output)
-         sect.appendChild(results);
-         //results.value = JSON.stringify(output);
-     } else {
-          const sect = document.querySelector("main");
-         const results = document.createElement("p");
          results.textContent = "No matches found";
-         sect.appendChild(results);
-         //results.value = "No matches";
+         mainSect.appendChild(results); // Append corresponding results
      }
+     
  }
