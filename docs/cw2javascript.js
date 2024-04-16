@@ -25,7 +25,7 @@ async function updateResults() {
      const licenseNumberElement = document.getElementById("licenseNum"); // Get user input
      licenseNum = licenseNumberElement.value.trim().toLowerCase();
  
-     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.%${driverName}%, LicenseNumber.ilike.%${licenseNum}%`);
+     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.${driverName}, LicenseNumber.ilike.${licenseNum}`);
      // Check if the input is a substring of any name
      if(arrPeople.length > 0) {
           found = true;
