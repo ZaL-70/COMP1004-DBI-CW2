@@ -47,7 +47,7 @@ async function updateResults() {
 
      if (found === false) {
           const results = document.createElement("p");
-          results.id = "searchResults";
+          results.id = "searchResult";
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
