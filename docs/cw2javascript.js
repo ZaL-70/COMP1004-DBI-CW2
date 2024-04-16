@@ -7,7 +7,8 @@ const submitBtn = document.getElementById("submitBtn");
 submitBtn.addEventListener("click", updateResults);    // Add listener to button
 
 async function updateResults() {
-     let driverName = document.getElementById("driverName"); // Get user input
+     const driverNameElement = document.getElementById("driverName"); // Get user input
+     let driverName = driverNameElement.nodeValue;
      
      const { arrNames, nameSelError } = await supabase.from("People").select("Name") // Get name data
      
