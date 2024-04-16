@@ -12,7 +12,7 @@ async function updateResults() {
      
      const { data: arrNames, error: nameSelError } = await supabase.from("People").select("Name"); // Get name data
      
-     for (const person of arrNames) {    // Check if the input is a substring of any name
+     for (const person in arrNames) {    // Check if the input is a substring of any name
           if (person.Name.includes(driverName)) {
                driverName = person.Name;     // Set variable to full name (to be used for select condition)
                break;
@@ -26,7 +26,7 @@ async function updateResults() {
      const results = document.getElementById("results");
      if (output.length > 0) {
           // Format the output before displaying
-          results.value = JSON.stringify(output[0]); // Just an example, format as per your requirement
+          results.value = JSON.stringify(output); // Just an example, format as per your requirement
       } else {
           results.value = "No results found";
       }
