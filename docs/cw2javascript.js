@@ -9,6 +9,7 @@ submitBtn.addEventListener("click", updateResults); // Add listener to button
 async function updateResults() {
      let found = false;
      let driverName = "";
+     let licenseNum = "";
      // Remove all existing search results
      const existingResults = document.querySelectorAll("#searchResult");
      existingResults.forEach(result => {
@@ -17,33 +18,30 @@ async function updateResults() {
 
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
-     // Create variable for users query (for person name)
+     // Get user query for name
      const driverNameElement = document.getElementById("driverName"); // Get user input
      driverName = driverNameElement.value.trim().toLowerCase();
+     // Get user query for license numeber
+     const licenseNumberElement = document.getElementById("licenseNum"); // Get user input
+     licenseNum = licenseNumberElement.value.trim().toLowerCase();
  
-     const { data: arrNames, error: nameSelError } = await supabase
-          .from("People")
-          .select("Name"); // Get name data
+     const { data: arrPeople, error: allSelError } = await supabase.from("People").select().or(`Name.ilike.%${driverName}%, LicenseNumber.ilike.%${licenseNum}%`);
      // Check if the input is a substring of any name
-     for (const pName of arrNames) {
-          let pNameLower = pName.Name.toLowerCase();
-          if ((pNameLower.includes(driverName) && driverName !== "")) {
-               found = true;
-               const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
-               const results = document.createElement("ul");
-               results.id = "searchResult";
+     if(arrPeople.length > 0) {
+          found = true;
+          const results = document.createElement("ul");
+          results.id = "searchResult";
                
-               for (const person of arrPeople) {
-                    // Create <li> elements for each field and populate them with the field value
-                    const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
-                    fields.forEach(field => {
-                         const li = document.createElement("li");
-                         li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                         results.appendChild(li); // Append <li> to <ul>
-                    });
-               }
-               mainSect.appendChild(results); // Append search result <div> to main section
+          for (const person of arrPeople) {
+               // Create <li> elements for each field and populate them with the field value
+               const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
+               fields.forEach(field => {
+                    const li = document.createElement("li");
+                    li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
+                    results.appendChild(li); // Append <li> to <ul>
+               });
           }
+          mainSect.appendChild(results); // Append search result <div> to main section
      }
 
      if (found === false) {
