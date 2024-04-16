@@ -27,7 +27,7 @@ async function updateResults() {
  
      const { data: arrQuery, error: nameSelError } = await supabase
           .from("People")
-          .select("Name", "LicenseNumber"); // Get name/license number data
+          .select(); // Get name/license number data
      // Check if the input is a substring of any name
      for (const pQuery of arrQuery) {
           let pNameLower = pQuery.Name.toLowerCase();
