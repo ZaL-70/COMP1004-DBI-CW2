@@ -32,9 +32,9 @@ async function updateResults() {
      for (const pQuery of arrQuery) {
           let pNameLower = pQuery.Name.toLowerCase();
           let pLicenseNumLower = pQuery.LicenseNum.toLowerCase();
-          if ((pNameLower.includes(driverName) && driverName !== "") || (pNameLower.includes(licenseNum) && licenseNum !== "")) {
+          if ((pNameLower.includes(driverName) && driverName !== "") || (pLicenseNumLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
-               const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
+               const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNum);
                const results = document.createElement("ul");
                results.id = "searchResult";
                
