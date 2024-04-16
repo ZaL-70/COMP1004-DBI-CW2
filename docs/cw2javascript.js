@@ -17,7 +17,6 @@ async function updateResults() {
 
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
-     const resultSect = document.querySelector("#searchResult");
      // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
      driverName = driverNameElement.value.trim();
@@ -30,19 +29,17 @@ async function updateResults() {
           if (pName.Name.includes(driverName) && driverName !== "") {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
-               const results = document.createElement("div");
+               const results = document.createElement("ul");
                results.id = "searchResult";
                
                for (const person of arrPeople) {
-                    const ul = document.createElement("ul"); // Create a <ul> element for each person
                     // Create <li> elements for each field and populate them with the field value
                     const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
                     fields.forEach(field => {
                          const li = document.createElement("li");
                          li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                         ul.appendChild(li); // Append <li> to <ul>
+                         results.appendChild(li); // Append <li> to <ul>
                     });
-                    results.appendChild(ul); // Append <ul> to the search result <div>
                }
                mainSect.appendChild(results); // Append search result <div> to main section
           }
