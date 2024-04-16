@@ -37,8 +37,6 @@ submitBtn.addEventListener("click", fetchPeopleData());    // Add listener to bu
 const results = document.getElementById("results");
 
 async function fetchPeopleData() {
-     const { data: arrPeople, error } = await supabase
-     .from("People")
-     .select("Name")
+     const { data, error } = await supabase.from("People").select("Name")
      results.value = JSON.stringify(data);
 }
