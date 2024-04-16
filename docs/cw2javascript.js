@@ -30,8 +30,8 @@ async function updateResults() {
           .select("Name", "LicenseNumber"); // Get name data
      // Check if the input is a substring of any name
      for (const pQuery of arrQuery) {
-          pNameLower = pQuery.Name.toLowerCase();
-          pLicenseNumLower = pQuery.LicenseNum.toLowerCase();
+          let pNameLower = pQuery.Name.toLowerCase();
+          let pLicenseNumLower = pQuery.LicenseNum.toLowerCase();
           if ((pNameLower.includes(driverName) && driverName !== "") || (pNameLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
