@@ -25,14 +25,22 @@ async function updateResults() {
           .from("People")
           .select("Name"); // Get name data
      // Check if the input is a substring of any name
-     for (const person of arrNames) {
-         if (person.Name.includes(driverName) && driverName !== "") {
+     for (const pName of arrNames) {
+         if (pName.Name.includes(driverName) && driverName !== "") {
              found = true;
-             console.log(person.Name);
-             const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", person.Name);
-             console.log(person.PersonID);
+             const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
              const results = document.createElement("p");
              results.id = "searchResults";
+
+               for(const person of output) {
+                    console.log(person.PersonID);
+                    console.log(person.Name);
+                    console.log(person.Address);
+                    console.log(person.DOB);
+                    console.log(person.LicenseNumber);
+                    console.log(person.ExpiryDate);
+               }
+
              results.textContent = JSON.stringify(output);
              mainSect.appendChild(results); // Append corresponding results
          }
