@@ -18,8 +18,6 @@ async function updateResults() {
 
      // Declare result variables to append to DOM
      const mainSect = document.querySelector("main");
-     const results = document.createElement("p");
-     results.id = "searchResults";
      // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
      driverName = driverNameElement.value.trim();
@@ -33,6 +31,8 @@ async function updateResults() {
              //foundPerson = person; // Set variable to full name (to be used for select condition)
              found = true
              const { data: output, error: allSelError } = await supabase.from("People").select().eq("Name", person.Name);
+             const results = document.createElement("p");
+             results.id = "searchResults";
              results.textContent = JSON.stringify(output);
              mainSect.appendChild(results); // Append corresponding results
          }
