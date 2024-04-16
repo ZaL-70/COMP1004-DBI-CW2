@@ -19,14 +19,15 @@ async function updateResults() {
      const mainSect = document.querySelector("main");
      // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     driverName = driverNameElement.value.trim();
+     driverName = driverNameElement.value.trim().toLowerCase();
  
      const { data: arrNames, error: nameSelError } = await supabase
           .from("People")
           .select("Name"); // Get name data
      // Check if the input is a substring of any name
      for (const pName of arrNames) {
-          if (pName.Name.includes(driverName) && driverName !== "") {
+          pNameLower = pName.Name.toLowerCase();
+          if (pNameLower.includes(driverName) && driverName !== "") {
                found = true;
                const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pName.Name);
                const results = document.createElement("ul");
