@@ -21,7 +21,7 @@ async function updateResults() {
      results.id = "searchResults";
      // Create variable for users query (for person name)
      const driverNameElement = document.getElementById("driverName"); // Get user input
-     driverName = driverNameElement.value.trim();
+     let driverName = driverNameElement.value.trim();
  
      const { data: arrNames, error: nameSelError } = await supabase
           .from("People")
