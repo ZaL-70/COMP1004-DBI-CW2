@@ -135,8 +135,8 @@ async function addVehicleData() {
      // Get all input queries from form
      const vIDEl = document.getElementById("txtVehicleID");
      const vMakeEl = document.getElementById("txtVehicleMake");
-     const vModelEl = document.getElementById("txtVehicleModel"); // Get user input
-     const vColourEl = document.getElementById("txtVehicleColour"); // Get user input
+     const vModelEl = document.getElementById("txtVehicleModel");
+     const vColourEl = document.getElementById("txtVehicleColour");
      const vOwnerIDEl = document.getElementById("txtVOwnerID"); // Get user input
      
      vID = vIDEl.value.trim();
@@ -254,10 +254,10 @@ async function addPersonData() {
           return;
      }
      // Reset fields
-     pIDEl = "";
-     pNameEl = "";
-     pAddressEl = "";
-     pDOBEl = "";
-     pLicenseNumEl = "";
-     pExpiryDateEl = "";
+     pIDEl.value = "";
+     pNameEl.value = "";
+     pAddressEl.value = "";
+     pDOBEl.value = "";
+     pLicenseNumEl.value = "";
+     pExpiryDateEl.value = "";
 }

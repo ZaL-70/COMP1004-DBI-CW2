@@ -18,6 +18,7 @@ header {
     grid-row: 1; 
     text-align: center;
     border: 5px solid #ffffff;
+    color: #ffffff;
     padding: 0;
     margin: .35em;
 }
@@ -64,4 +65,24 @@ header ul li {
 img {
     max-width: 100%;
     height: auto;
+}
+
+.block, li {
+    border: 2px solid #ffffffcc;
+    background-color: #150189;
+    padding: .75em;
+    border-radius: 10px;
+}
+
+.nav a {
+    color: #ffffff;
+}
+
+h1 {
+    font-size: 300%;
+    text-shadow: 
+    -2px -2px 0 #ff0000,  
+    2px -2px 0 #ff0000,
+    -2px 2px 0 #ff0000,
+    2px 2px 0 #ff0000;
 }
