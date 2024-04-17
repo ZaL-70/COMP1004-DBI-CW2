@@ -163,7 +163,6 @@ async function updateVehicleResults() {
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select()
-          .eq("PersonID",personID);
 
      console.log(arrOwners);
           
