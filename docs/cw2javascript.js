@@ -13,6 +13,11 @@ if (btnVehicleQuery) {
     btnVehicleQuery.addEventListener("click", updateVehicleResults);
 }
 
+const btnAddVehicle = document.getElementById("btnAddVehicle");
+if (btnAddVehicle) {
+    btnAddVehicle.addEventListener("click", addVehicleData);
+}
+
 async function updatePeopleResults() {
      let found = false;
      let driverName = "";
@@ -32,7 +37,7 @@ async function updatePeopleResults() {
      const licenseNumElement = document.getElementById("txtLicenseNum"); // Get user input
      licenseNum = licenseNumElement.value.trim().toLowerCase();
  
-     const { data: arrPQuery, error: nameSelError } = await supabase
+     const { data: arrPQuery, error: nameSelErr } = await supabase
           .from("People")
           .select(); // Get name/license number data
      // Check if the input is a substring of any name
@@ -41,7 +46,7 @@ async function updatePeopleResults() {
           let pLicenseNumLower = pQuery.LicenseNumber.toLowerCase();
           if ((pNameLower.includes(driverName) && driverName !== "") || (pLicenseNumLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
-               const { data: arrPeople, error: allSelError } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNumber);
+               const { data: arrPeople, error: allSelErr } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNumber);
                const results = document.createElement("ul");
                results.id = "searchResultPeople";
                
@@ -81,7 +86,7 @@ async function updateVehicleResults() {
      const regNumElement = document.getElementById("txtRegNum"); // Get user input
      regNum = regNumElement.value.trim().toLowerCase();
  
-     const { data: arrVQuery, error: nameSelError } = await supabase
+     const { data: arrVQuery, error: numSelErr } = await supabase
           .from("Vehicles")
           .select(); // Get name/license number data
      // Check if the input is a substring of any name
@@ -112,4 +117,32 @@ async function updateVehicleResults() {
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
+ }
+
+ async function addVehicleData() {
+     let vID = null;
+     let vMake = null;
+     let vModel = null;
+     let vColour = null;
+     let vOwnerID = null;
+
+     // Get all input queries from form
+     const vIDEl = document.getElementById("txtVehicleID");
+     const vMakeEl = document.getElementById("txtVehicleMake");
+     const vModelEl = document.getElementById("txtVehicleModel"); // Get user input
+     const vColourEl = document.getElementById("txtVehicleColour"); // Get user input
+     const vOwnerIDEl = document.getElementById("txtVOwnerID"); // Get user input
+     vID = vIDEl.value.trim();
+     vMake = vMakeEl.value.trim();
+     vModel = vModelEl.value.trim();
+     vColour = vColourEl.value.trim();
+     vOwnerID = vOwnerIDEl.value.trim();
+
+     const { addDataErr } = await supabase.from("students")
+          .insert({VehicleID: vID,
+               Make: vMake,
+               Model: vModel,
+               Colour: vColour,
+               OwnerID: vOwnerID
+          });
  }
