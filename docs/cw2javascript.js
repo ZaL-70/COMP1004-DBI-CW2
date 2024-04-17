@@ -124,7 +124,7 @@ async function updateVehicleResults() {
      } 
  }
 
- function addVehicleData() {
+async function addVehicleData() {
      let vID = null;
      let vMake = null;
      let vModel = null;
@@ -148,7 +148,8 @@ async function updateVehicleResults() {
           return;
      }
 
-     if(checkPersonExists(vOwnerID) === true) { // Add vehicle data if its owner exists
+     const exists = await checkPersonExists(vOwnerID)
+     if(exists === true) { // Add vehicle data if its owner exists
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
           console.log("vowner id existed");
      } else {
@@ -172,7 +173,7 @@ async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour
      });
 }
 
-function addPersonData() {
+async function addPersonData() {
      let pID = null;
      let pName = null;
      let pAddress = null;
@@ -199,7 +200,8 @@ function addPersonData() {
           return;
      }
 
-     if(checkPersonExists(pID) === false) { // Add vehicle data if its owner exists
+     const exists = await checkPersonExists(pID)
+     if(exists === false) { // Add vehicle data if its owner exists
           insertPerson(pID, pName, pAddress, pDOB, pLicenseNum, pExpiryDate);
           console.log("Person id didnt existed");
      } else {
