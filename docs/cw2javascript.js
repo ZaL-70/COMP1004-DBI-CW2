@@ -145,7 +145,14 @@ async function addVehicleData() {
      vColour = vColourEl.value.trim();
      vOwnerID = vOwnerIDEl.value.trim(); // Assign inputs to variables
 
+     // Set empty values to null
+     if (!vMake) vMake = null;
+     if (!vModel) vModel = null;
+     if (!vColour) vColour = null;
+     if (!vOwnerID) vOwnerID = null;
+
      if (!vID) { // Check vehicle ID is entered
+          alert("VehicleID field is mandatory.");
           return;
      }
 
@@ -174,12 +181,17 @@ async function addVehicleData() {
           });
           console.log("owner id existed");
      } else {  // Redirect to add owner if owner doesn't exist
+          console.log("vowner exists = " + exists);
           alert("The owner does not exist, redirecting to add owner information");
           //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
-          console.log("vowner exists = " + exists);
           window.location.href = "add-person.html";
      }  
-     document.getElementById("vehicleForm").reset();
+     // Reset input fields
+     vIDEl.value = "";
+     vMakeEl.value = "";
+     vModelEl.value = "";
+     vColourEl.value = "";
+     vOwnerIDEl.value = "";
  }
 
 async function addPersonData() {
@@ -237,8 +249,13 @@ async function addPersonData() {
      } else {
           console.log("Person id existed");
           alert("This person already exists!");
-          document.getElementById("personForm").reset();
           return;
      }
-     document.getElementById("personForm").reset();
+     // Reset fields
+     pIDEl = "";
+     pNameEl = "";
+     pAddressEl = "";
+     pDOBEl = "";
+     pLicenseNumEl = "";
+     pExpiryDateEl = "";
 }
