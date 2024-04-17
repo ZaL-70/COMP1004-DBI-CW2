@@ -162,8 +162,8 @@ async function updateVehicleResults() {
  async function checkPersonExists(personID) {
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
-          .select()
-          .eq(personID);
+          .select("PersonID")
+          .eq("PersonID",personID);
 
 
      console.log(arrOwners);
