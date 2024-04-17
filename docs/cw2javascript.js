@@ -150,13 +150,14 @@ async function addVehicleData() {
 
      // Check if the owner ID exists
      let exists = false;
+     const letssee = true;
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select();
           
      for (const owner of arrOwners) {
           console.log("arr id is " + owner.PersonID);
-          if (String(owner.PersonID) === String(vOwnerID)) {
+          if (letssee === true) {
                console.log("returns true");
                exists = true;
                break;
