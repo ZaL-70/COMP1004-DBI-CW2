@@ -60,18 +60,15 @@ footer {
 
 header ul li {
     list-style-type: none;
+    border: 2px solid #ffffffcc;
+    background-color: #150189;
+    padding: .75em;
+    border-radius: 10px;
 }
 
 img {
     max-width: 100%;
     height: auto;
-}
-
-.block, li {
-    border: 2px solid #ffffffcc;
-    background-color: #150189;
-    padding: .75em;
-    border-radius: 10px;
 }
 
 .nav a {
