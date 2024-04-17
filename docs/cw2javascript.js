@@ -148,11 +148,13 @@ async function updateVehicleResults() {
           return;
      }
 
-     if(checkPersonExists(vOwnerID) == true) { // Add vehicle data if its owner exists
+     if(checkPersonExists(vOwnerID) === true) { // Add vehicle data if its owner exists
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+          console.log("vowner id existed");
      } else {
           //alert("The owner does not exist, redirecting to add owner information");
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+          console.log("vowner id didnt existed");
           //window.location.href = "add-person.html"; // Redirect to add person page
      }
      
@@ -197,9 +199,11 @@ function addPersonData() {
           return;
      }
 
-     if(checkPersonExists(pID) == false) { // Add vehicle data if its owner exists
+     if(checkPersonExists(pID) === false) { // Add vehicle data if its owner exists
           insertPerson(pID, pName, pAddress, pDOB, pLicenseNum, pExpiryDate);
+          console.log("Person id didnt existed");
      } else {
+          console.log("Person id existed");
           alert("This person already exists!");
           document.getElementById("personForm").reset();
           return;
