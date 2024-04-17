@@ -163,12 +163,10 @@ async function updateVehicleResults() {
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select()
-
-     console.log(arrOwners);
           
      for (const owner of arrOwners) {
+          console.log(owner.PersonID);
           if (owner.PersonID === personID) {
-               console.log(owner.PersonID);
                return true;
           }
      }
