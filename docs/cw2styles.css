@@ -83,3 +83,8 @@ h1 {
     -2px 2px 0 #ff0000,
     2px 2px 0 #ff0000;
 }
+
+.searchResults {
+    border: 2px hsl(hue, saturation, 30%);
+    border-radius: 5px;
+}

@@ -28,7 +28,7 @@ async function updatePeopleResults() {
      let driverName = "";
      let licenseNum = "";
      // Remove all existing search results
-     const existingResults = document.querySelectorAll("#searchResultPeople");
+     const existingResults = document.querySelectorAll("#searchResults");
      existingResults.forEach(result => {
           result.remove();
      });
@@ -53,7 +53,7 @@ async function updatePeopleResults() {
                found = true;
                const { data: arrPeople, error: allSelErr } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNumber);
                const results = document.createElement("ul");
-               results.id = "searchResultPeople";
+               results.id = "searchResults";
                
                for (const person of arrPeople) {
                     // Create <li> elements for each field and populate them with the field value
@@ -70,7 +70,7 @@ async function updatePeopleResults() {
 
      if (found === false) {
           const results = document.createElement("p");
-          results.id = "searchResultPeople";
+          results.id = "searchResults";
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
@@ -80,7 +80,7 @@ async function updateVehicleResults() {
      let found = false;
      let regNum = "";
      // Remove all existing search results
-     const existingResults = document.querySelectorAll("#searchResultVehicle");
+     const existingResults = document.querySelectorAll("#searchResults");
      existingResults.forEach(result => {
           result.remove();
      });
@@ -101,7 +101,7 @@ async function updateVehicleResults() {
                found = true;
                const { data: arrVehicles, error: allSelError } = await supabase.from("Vehicles").select().eq("VehicleID", vQuery.VehicleID);
                const results = document.createElement("ul");
-               results.id = "searchResultVehicle";
+               results.id = "searchResults";
                
                for (const vehicle of arrVehicles) {
                     // Create <li> elements for each field and populate them with the field value
@@ -118,7 +118,7 @@ async function updateVehicleResults() {
 
      if (found === false) {
           const results = document.createElement("p");
-          results.id = "searchResultVehicle";
+          results.id = "searchResults";
           results.textContent = "No matches found";
           mainSect.appendChild(results); // Append corresponding results
      } 
