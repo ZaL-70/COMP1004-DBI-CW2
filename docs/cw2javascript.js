@@ -167,8 +167,8 @@ async function updateVehicleResults() {
 
 
      console.log(arrOwners);
-     
-     if(arrOwners[0] == personID) {
+
+     if(arrOwners[0] === personID) {
           return true;
      }
 
