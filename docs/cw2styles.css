@@ -85,6 +85,6 @@ h1 {
 }
 
 .searchResults {
-    border: 2px hsl(hue, saturation, 30%);
+    border: 2px black;
     border-radius: 5px;
 }
