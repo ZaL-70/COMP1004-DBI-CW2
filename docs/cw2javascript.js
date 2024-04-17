@@ -150,14 +150,13 @@ async function addVehicleData() {
 
      // Check if the owner ID exists
      let exists = false;
-     const letssee = true;
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select();
           
      for (const owner of arrOwners) {
           console.log("arr id is " + owner.PersonID);
-          if (letssee === true) {
+          if (String(owner.PersonID) === String(vOwnerID)) {
                console.log("returns true");
                exists = true;
                break;
@@ -177,7 +176,7 @@ async function addVehicleData() {
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, redirecting to add owner information");
           //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
-          console.log("vowner id didnt existed");
+          console.log("vowner exists = " + exists);
           window.location.href = "add-person.html";
      }  
      document.getElementById("vehicleForm").reset();
