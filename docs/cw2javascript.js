@@ -126,11 +126,11 @@ async function updateVehicleResults() {
 
 async function addVehicleData() {
      let exists = false;
-     let vID = null;
-     let vMake = null;
-     let vModel = null;
-     let vColour = null;
-     let vOwnerID = null;
+     let vID = "";
+     let vMake = "";
+     let vModel = "";
+     let vColour = "";
+     let vOwnerID = "";
 
      // Get all input queries from form
      const vIDEl = document.getElementById("txtVehicleID");
