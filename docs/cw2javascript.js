@@ -125,6 +125,7 @@ async function updateVehicleResults() {
  }
 
 async function addVehicleData() {
+     let exists = false;
      let vID = null;
      let vMake = null;
      let vModel = null;
@@ -149,7 +150,6 @@ async function addVehicleData() {
      }
 
      // Check if the owner ID exists
-     let exists = false;
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select();
