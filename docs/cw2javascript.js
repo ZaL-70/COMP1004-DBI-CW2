@@ -156,9 +156,10 @@ async function addVehicleData() {
           
      for (const owner of arrOwners) {
           console.log("arr id is " + owner.PersonID);
-          if (owner.PersonID === vOwnerID) {
+          if (String(owner.PersonID) === String(vOwnerID)) {
                console.log("returns true");
                exists = true;
+               break;
           }
      }
 
@@ -171,7 +172,7 @@ async function addVehicleData() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
-          console.log("owner id didnt existed");
+          console.log("owner id existed");
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, redirecting to add owner information");
           //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
@@ -180,17 +181,6 @@ async function addVehicleData() {
      }  
      document.getElementById("vehicleForm").reset();
  }
-
-// async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour, vehicleOID) {
-//      const { error: addDataErr } = await supabase.from("Vehicles")
-//      .insert({
-//           VehicleID: vehicleID,
-//           Make: vehicleMake,
-//           Model: vehicleModel,
-//           Colour: vehicleColour,
-//           OwnerID: vehicleOID
-//      });
-// }
 
 async function addPersonData() {
      let pID = null;
@@ -227,7 +217,7 @@ async function addPersonData() {
               
      for (const owner of arrOwners) {
           console.log("arr id is " + owner.PersonID);
-          if (owner.PersonID === vOwnerID) {
+          if (String(owner.PersonID) === String(pID)) {
                console.log("returns true");
                exists = true;
           }
@@ -252,33 +242,3 @@ async function addPersonData() {
      }
      document.getElementById("personForm").reset();
 }
-
-// async function insertPerson(personID, personName, personAddress, personDOB, personLicenseNum, personExpiryDate) {
-//      const { error: addDataErr } = await supabase.from("People")
-//      .insert({
-//           PersonID: personID,
-//           Name: personName,
-//           Address: personAddress,
-//           DOB: personDOB,
-//           LicenseNumber: personLicenseNum,
-//           pExpiryDate: personExpiryDate
-//      });
-// }
-
-// async function checkPersonExists(personID) {
-//      console.log("input to func id is " + personID);
-//      const { data: arrOwners, error: checkErr } = await supabase
-//           .from("People")
-//           .select()
-          
-//      for (const owner of arrOwners) {
-//           console.log("arr id is " + owner.PersonID);
-//           if (String(owner.PersonID) === String(personID)) {
-//                console.log("returns true");
-//                return true;
-//           }
-//      }
-
-//      console.log("returns false");
-//      return false;
-//  }
