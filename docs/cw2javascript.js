@@ -162,7 +162,7 @@ async function updateVehicleResults() {
  async function checkPersonExists(personID) {
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
-          .select("OwnerID")
+          .select("PersonID")
           .eq(personID);
 
      if(arrOwners[0] == personID) {
