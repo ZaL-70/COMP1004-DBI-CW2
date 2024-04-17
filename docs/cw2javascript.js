@@ -159,21 +159,6 @@ async function updateVehicleResults() {
      document.getElementById("vehicleForm").reset();
  }
 
- async function checkPersonExists(personID) {
-     const { data: arrOwners, error: checkErr } = await supabase
-          .from("People")
-          .select()
-          
-     for (const owner of arrOwners) {
-          console.log(owner.PersonID);
-          if (owner.PersonID === personID) {
-               return true;
-          }
-     }
-
-     return false;
- }
-
 async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour, vehicleOID) {
      const { error: addDataErr } = await supabase.from("Vehicles")
      .insert({
@@ -234,3 +219,19 @@ async function insertPerson(personID, personName, personAddress, personDOB, pers
           pExpiryDate: personExpiryDate
      });
 }
+
+async function checkPersonExists(personID) {
+     console.log("input to func id is " + personID);
+     const { data: arrOwners, error: checkErr } = await supabase
+          .from("People")
+          .select()
+          
+     for (const owner of arrOwners) {
+          console.log("arr id is " + owner.PersonID);
+          if (owner.PersonID === personID) {
+               return true;
+          }
+     }
+
+     return false;
+ }
