@@ -132,6 +132,7 @@ async function updateVehicleResults() {
      const vModelEl = document.getElementById("txtVehicleModel"); // Get user input
      const vColourEl = document.getElementById("txtVehicleColour"); // Get user input
      const vOwnerIDEl = document.getElementById("txtVOwnerID"); // Get user input
+     
      vID = vIDEl.value.trim();
      vMake = vMakeEl.value.trim();
      vModel = vModelEl.value.trim();
@@ -140,7 +141,7 @@ async function updateVehicleResults() {
 
      console.log(vID);
 
-     const { addDataErr } = await supabase.from("students")
+     const { addDataErr } = await supabase.from("Vehicles")
           .insert({VehicleID: vID,
                Make: vMake,
                Model: vModel,
