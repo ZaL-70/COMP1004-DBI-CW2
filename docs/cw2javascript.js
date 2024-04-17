@@ -218,6 +218,7 @@ async function addPersonData() {
      pExpiryDate = pExpiryDateEl.value.trim(); // Assign inputs to variables
 
      if (!pID || !pName || !pAddress || !pDOB || !pLicenseNum || !pExpiryDate) { // Check vehicle ID is entered
+          alert("Please enter all fields.");
           return;
      }
 
@@ -232,6 +233,7 @@ async function addPersonData() {
           if (String(owner.PersonID) === String(pID)) {
                console.log("returns true");
                exists = true;
+               break;
           }
      }
 
