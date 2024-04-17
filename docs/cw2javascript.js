@@ -165,6 +165,9 @@ async function updateVehicleResults() {
           .select("PersonID")
           .eq(personID);
 
+
+     console.log(arrOwners);
+     
      if(arrOwners[0] == personID) {
           return true;
      }
