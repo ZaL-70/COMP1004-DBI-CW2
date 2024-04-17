@@ -139,10 +139,10 @@ async function updateVehicleResults() {
      vColour = vColourEl.value.trim();
      vOwnerID = vOwnerIDEl.value.trim();
 
-     if (!vID) {
-          alert("VehicleID field is required");
-          return;
-      }
+     // if (!vID) {
+     //      alert("VehicleID field is required");
+     //      return;
+     // }
 
      const { addDataErr } = await supabase.from("Vehicles")
           .insert({
@@ -152,4 +152,6 @@ async function updateVehicleResults() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
+     
+     document.getElementById("vehicleForm").reset();
  }
