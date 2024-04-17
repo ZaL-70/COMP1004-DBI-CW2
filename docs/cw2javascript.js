@@ -163,7 +163,15 @@ async function addVehicleData() {
      }
 
      if(exists === true) { // Add vehicle data if its owner exists
-          insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+          const { error: addDataErr } = await supabase.from("Vehicles")
+          .insert({
+               VehicleID: vID,
+               Make: vMake,
+               Model: vModel,
+               Colour: vColour,
+               OwnerID: vOwnerID
+          });
+}
           console.log("vowner id existed");
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, redirecting to add owner information");
@@ -174,16 +182,16 @@ async function addVehicleData() {
      document.getElementById("vehicleForm").reset();
  }
 
-async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour, vehicleOID) {
-     const { error: addDataErr } = await supabase.from("Vehicles")
-     .insert({
-          VehicleID: vehicleID,
-          Make: vehicleMake,
-          Model: vehicleModel,
-          Colour: vehicleColour,
-          OwnerID: vehicleOID
-     });
-}
+// async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour, vehicleOID) {
+//      const { error: addDataErr } = await supabase.from("Vehicles")
+//      .insert({
+//           VehicleID: vehicleID,
+//           Make: vehicleMake,
+//           Model: vehicleModel,
+//           Colour: vehicleColour,
+//           OwnerID: vehicleOID
+//      });
+// }
 
 async function addPersonData() {
      let pID = null;
