@@ -138,6 +138,8 @@ async function updateVehicleResults() {
      vColour = vColourEl.value.trim();
      vOwnerID = vOwnerIDEl.value.trim();
 
+     console.log(vID);
+
      const { addDataErr } = await supabase.from("students")
           .insert({VehicleID: vID,
                Make: vMake,
