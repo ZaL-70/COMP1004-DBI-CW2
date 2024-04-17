@@ -124,7 +124,7 @@ async function updateVehicleResults() {
      } 
  }
 
-function addVehicleData() {
+async function addVehicleData() {
      let vID = null;
      let vMake = null;
      let vModel = null;
@@ -148,17 +148,29 @@ function addVehicleData() {
           return;
      }
 
-     const exists = checkPersonExists(vOwnerID)
+     // Check if the owner ID exists
+     const exists = false;
+     const { data: arrOwners, error: checkErr } = await supabase
+          .from("People")
+          .select();
+          
+     for (const owner of arrOwners) {
+          console.log("arr id is " + owner.PersonID);
+          if (owner.PersonID === vOwnerID) {
+               console.log("returns true");
+               exists = true;
+          }
+     }
+
      if(exists === true) { // Add vehicle data if its owner exists
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
           console.log("vowner id existed");
-     } else {
-          //alert("The owner does not exist, redirecting to add owner information");
-          insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+     } else {  // Redirect to add owner if owner doesn't exist
+          alert("The owner does not exist, redirecting to add owner information");
+          //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
           console.log("vowner id didnt existed");
-          //window.location.href = "add-person.html"; // Redirect to add person page
-     }
-     
+          window.location.href = "add-person.html";
+     }  
      document.getElementById("vehicleForm").reset();
  }
 
@@ -173,7 +185,7 @@ async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour
      });
 }
 
-function addPersonData() {
+async function addPersonData() {
      let pID = null;
      let pName = null;
      let pAddress = null;
@@ -200,7 +212,20 @@ function addPersonData() {
           return;
      }
 
-     const exists = checkPersonExists(pID)
+     // Check if the person ID exists
+     const exists = false;
+     const { data: arrOwners, error: checkErr } = await supabase
+          .from("People")
+          .select();
+              
+     for (const owner of arrOwners) {
+          console.log("arr id is " + owner.PersonID);
+          if (owner.PersonID === vOwnerID) {
+               console.log("returns true");
+               exists = true;
+          }
+     }
+
      if(exists === false) { // Add vehicle data if its owner exists
           insertPerson(pID, pName, pAddress, pDOB, pLicenseNum, pExpiryDate);
           console.log("Person id didnt existed");
@@ -210,7 +235,6 @@ function addPersonData() {
           document.getElementById("personForm").reset();
           return;
      }
-     
      document.getElementById("personForm").reset();
 }
 
@@ -226,20 +250,20 @@ async function insertPerson(personID, personName, personAddress, personDOB, pers
      });
 }
 
-async function checkPersonExists(personID) {
-     console.log("input to func id is " + personID);
-     const { data: arrOwners, error: checkErr } = await supabase
-          .from("People")
-          .select()
+// async function checkPersonExists(personID) {
+//      console.log("input to func id is " + personID);
+//      const { data: arrOwners, error: checkErr } = await supabase
+//           .from("People")
+//           .select()
           
-     for (const owner of arrOwners) {
-          console.log("arr id is " + owner.PersonID);
-          if (String(owner.PersonID) === String(personID)) {
-               console.log("returns true");
-               return true;
-          }
-     }
+//      for (const owner of arrOwners) {
+//           console.log("arr id is " + owner.PersonID);
+//           if (String(owner.PersonID) === String(personID)) {
+//                console.log("returns true");
+//                return true;
+//           }
+//      }
 
-     console.log("returns false");
-     return false;
- }
+//      console.log("returns false");
+//      return false;
+//  }
