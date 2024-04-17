@@ -155,3 +155,7 @@ async function updateVehicleResults() {
      
      document.getElementById("vehicleForm").reset();
  }
+
+ function checkOwnerExists() {
+     
+ }
