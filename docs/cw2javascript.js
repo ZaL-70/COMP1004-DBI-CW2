@@ -149,7 +149,7 @@ async function addVehicleData() {
      }
 
      // Check if the owner ID exists
-     const exists = false;
+     let exists = false;
      const { data: arrOwners, error: checkErr } = await supabase
           .from("People")
           .select();
@@ -171,6 +171,7 @@ async function addVehicleData() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
+          console.log("owner id didnt existed");
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, redirecting to add owner information");
           //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
@@ -232,8 +233,16 @@ async function addPersonData() {
           }
      }
 
-     if(exists === false) { // Add vehicle data if its owner exists
-          insertPerson(pID, pName, pAddress, pDOB, pLicenseNum, pExpiryDate);
+     if(exists === false) { // Add person data if its person not added yet
+          const { error: addDataErr } = await supabase.from("People")
+          .insert({
+               PersonID: pID,
+               Name: pName,
+               Address: pAddress,
+               DOB: pDOB,
+               LicenseNumber: pLicenseNum,
+               ExpiryDate: pExpiryDate
+          });
           console.log("Person id didnt existed");
      } else {
           console.log("Person id existed");
@@ -244,17 +253,17 @@ async function addPersonData() {
      document.getElementById("personForm").reset();
 }
 
-async function insertPerson(personID, personName, personAddress, personDOB, personLicenseNum, personExpiryDate) {
-     const { error: addDataErr } = await supabase.from("People")
-     .insert({
-          PersonID: personID,
-          Name: personName,
-          Address: personAddress,
-          DOB: personDOB,
-          LicenseNumber: personLicenseNum,
-          pExpiryDate: personExpiryDate
-     });
-}
+// async function insertPerson(personID, personName, personAddress, personDOB, personLicenseNum, personExpiryDate) {
+//      const { error: addDataErr } = await supabase.from("People")
+//      .insert({
+//           PersonID: personID,
+//           Name: personName,
+//           Address: personAddress,
+//           DOB: personDOB,
+//           LicenseNumber: personLicenseNum,
+//           pExpiryDate: personExpiryDate
+//      });
+// }
 
 // async function checkPersonExists(personID) {
 //      console.log("input to func id is " + personID);
