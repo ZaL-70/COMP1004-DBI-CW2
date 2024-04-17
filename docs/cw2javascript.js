@@ -152,6 +152,7 @@ async function updateVehicleResults() {
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
      } else {
           alert("The owner does not exist, redirecting to add owner information");
+          insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
           window.location.href = "add-person.html"; // Redirect to add person page
      }
      
