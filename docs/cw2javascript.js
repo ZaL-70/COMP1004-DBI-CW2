@@ -171,8 +171,6 @@ async function addVehicleData() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
-}
-          console.log("vowner id existed");
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, redirecting to add owner information");
           //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
