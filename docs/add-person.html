@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>Add a Person</title>
+        <link rel="stylesheet" href="cw2styles.css" />
+        <script src="cw2javascript.js" type="module"></script>
+    </head>
+    <body>
+        <header>
+            <h1>Add a vehicle</h1>
+            <ul class = nav>
+                <li><a href='index.html'>People search</a></li>
+                <li><a href='vehicle-search.html'>Vehicle search</a></li>
+                <li><a href='add-vehicle.html'>Add a vehicle</a></li>
+                <li><a href='add-person.html'>Add a person</a></li>
+            </ul>
+        </header>
+        <main>
+            <form id="personForm">
+                <p>
+                    <label for="txtPersonID">Enter PersonID:</label>
+                    <input type="text" id="txtPersonID" name="txtPersonID" required>
+                </p>
+                <p>
+                    <label for="txtPersonName">Enter person's name:</label>
+                    <input type="text" id="txtPersonName" name="txtPersonName" required>
+                </p>
+                <p>
+                    <label for="txtPersonAddress">Enter person's address:</label>
+                    <input type="text" id="txtPersonAddress" name="txtPersonAddress" required>
+                </p>
+                <p>
+                    <label for="txtPersonDOB">Enter person's DOB:</label>
+                    <input type="date" id="txtPersonDOB" name="txtPersonDOB" required>
+                </p>
+                <p>
+                    <label for="txtPersonLicenseNum">Enter person's license number:</label>
+                    <input type="text" id="txtPersonLicenseNum" name="txtPersonLicenseNum" required>
+                </p>
+                <p>
+                    <label for="txtPersonExpiryDate">Enter expiry date:</label>
+                    <input type="date" id="txtPersonExpiryDate" name="txtPersonExpiryDate" required>
+                </p>
+                <p>
+                    <button type="submit" id="btnAddPerson">Submit</button>
+                </p>
+            </form>
+        </main>
+        <aside>
+            <img src = 'imgs/leader.png'>
+        </aside>
+        <footer>
+            <p>Website made by Zal for COMP1004 DBI CW2. Add a vehicle page </p>
+        </footer>
+    </body>
+</html>
