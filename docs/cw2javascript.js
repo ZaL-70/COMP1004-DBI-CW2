@@ -139,6 +139,11 @@ async function updateVehicleResults() {
      vColour = vColourEl.value.trim();
      vOwnerID = vOwnerIDEl.value.trim();
 
+     if (!vID) {
+          console.error("VehicleID field is required");
+          return;
+      }
+
      console.log(vID);
 
      const { addDataErr } = await supabase.from("Vehicles")
