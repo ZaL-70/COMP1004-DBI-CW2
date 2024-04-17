@@ -139,10 +139,9 @@ async function updateVehicleResults() {
      vColour = vColourEl.value.trim();
      vOwnerID = vOwnerIDEl.value.trim();
 
-     // if (!vID) {
-     //      alert("VehicleID field is required");
-     //      return;
-     // }
+     if (!vID) {
+          return;
+     }
 
      const { addDataErr } = await supabase.from("Vehicles")
           .insert({
@@ -157,5 +156,5 @@ async function updateVehicleResults() {
  }
 
  function checkOwnerExists() {
-     
+
  }
