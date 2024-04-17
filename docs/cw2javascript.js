@@ -140,14 +140,13 @@ async function updateVehicleResults() {
      vOwnerID = vOwnerIDEl.value.trim();
 
      if (!vID) {
-          console.error("VehicleID field is required");
+          alert("VehicleID field is required");
           return;
       }
 
-     console.log(vID);
-
      const { addDataErr } = await supabase.from("Vehicles")
-          .insert({VehicleID: vID,
+          .insert({
+               VehicleID: vID,
                Make: vMake,
                Model: vModel,
                Colour: vColour,
