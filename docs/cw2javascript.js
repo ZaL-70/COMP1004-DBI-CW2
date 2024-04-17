@@ -164,6 +164,8 @@ async function updateVehicleResults() {
           .from("People")
           .select("PersonID")
           .eq("PersonID",personID);
+
+     console.log(arrOwners);
           
      for (const owner of arrOwners) {
           if (owner.PersonID === personID) {
