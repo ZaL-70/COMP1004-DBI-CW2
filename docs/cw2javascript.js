@@ -164,13 +164,12 @@ async function updateVehicleResults() {
           .from("People")
           .select("PersonID")
           .eq("PersonID",personID);
-
-
-     console.log(arrOwners);
-     console.log(arrOwners.PersonID)
-
-     if(arrOwners.PersonID[0] === personID) {
-          return true;
+          
+     for (const owner of arrOwners) {
+          if (owner.PersonID === personID) {
+               console.log(owner.PersonID);
+               return true;
+          }
      }
 
      return false;
