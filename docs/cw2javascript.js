@@ -18,6 +18,11 @@ if (btnAddVehicle) {
     btnAddVehicle.addEventListener("click", addVehicleData);
 }
 
+const btnAddPerson = document.getElementById("btnAddPerson");
+if (btnAddPerson) {
+    btnAddPerson.addEventListener("click", addPersonData);
+}
+
 async function updatePeopleResults() {
      let found = false;
      let driverName = "";
@@ -119,7 +124,7 @@ async function updateVehicleResults() {
      } 
  }
 
- async function addVehicleData() {
+ function addVehicleData() {
      let vID = null;
      let vMake = null;
      let vModel = null;
@@ -137,24 +142,92 @@ async function updateVehicleResults() {
      vMake = vMakeEl.value.trim();
      vModel = vModelEl.value.trim();
      vColour = vColourEl.value.trim();
-     vOwnerID = vOwnerIDEl.value.trim();
+     vOwnerID = vOwnerIDEl.value.trim(); // Assign inputs to variables
 
-     if (!vID) {
+     if (!vID) { // Check vehicle ID is entered
           return;
      }
 
-     const { addDataErr } = await supabase.from("Vehicles")
-          .insert({
-               VehicleID: vID,
-               Make: vMake,
-               Model: vModel,
-               Colour: vColour,
-               OwnerID: vOwnerID
-          });
+     if(checkPersonExists(vOwnerID) === true) { // Add vehicle data if its owner exists
+          insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+     } else {
+          alert("The owner does not exist, redirecting to add owner information");
+          window.location.href = "add-person.html"; // Redirect to add person page
+     }
      
      document.getElementById("vehicleForm").reset();
  }
 
- function checkOwnerExists() {
+ async function checkPersonExists(personID) {
+     const { data: arrOwners, error: checkErr } = await supabase
+          .from("People")
+          .select("OwnerID")
+          .eq(personID);
 
+     if(arrOwners[0] == personID) {
+          return true;
+     }
+
+     return false;
  }
+
+async function insertVehicle(vehicleID, vehicleMake, vehicleModel, vehicleColour, vehicleOID) {
+     const { error: addDataErr } = await supabase.from("Vehicles")
+     .insert({
+          VehicleID: vehicleID,
+          Make: vehicleMake,
+          Model: vehicleModel,
+          Colour: vehicleColour,
+          OwnerID: vehicleOID
+     });
+}
+
+function addPersonData() {
+     let pID = null;
+     let pName = null;
+     let pAddress = null;
+     let pDOB = null;
+     let pLicenseNum = null;
+     let pExpiryDate = null;
+
+     // Get all input queries from form
+     const pIDEl = document.getElementById("txtPersonID");
+     const pNameEl = document.getElementById("txtPersonName");
+     const pAddressEl = document.getElementById("txtPersonAddress"); // Get user input
+     const pDOBEl = document.getElementById("txtPersonDOB"); // Get user input
+     const pLicenseNumEl = document.getElementById("txtPersonLicenseNum"); // Get user input
+     const pExpiryDateEl = document.getElementById("txtPersonExpiryDate"); // Get user input
+
+     pID = pIDEl.value.trim();
+     pName = pNameEl.value.trim();
+     pAddress = pAddressEl.value.trim();
+     pDOB = pDOBEl.value.trim();
+     pLicenseNum = pLicenseNumEl.value.trim();
+     pExpiryDate = pExpiryDateEl.value.trim(); // Assign inputs to variables
+
+     if (!pID || !pName || !pAddress || !pDOB || !pLicenseNum || !pExpiryDate) { // Check vehicle ID is entered
+          return;
+     }
+
+     if(checkPersonExists(pID) === false) { // Add vehicle data if its owner exists
+          insertPerson(pID, pName, pAddress, pDOB, pLicenseNum, pExpiryDate);
+     } else {
+          alert("This person already exists!");
+          document.getElementById("personForm").reset();
+          return;
+     }
+     
+     document.getElementById("personForm").reset();
+}
+
+async function insertPerson(personID, personName, personAddress, personDOB, personLicenseNum, personExpiryDate) {
+     const { error: addDataErr } = await supabase.from("People")
+     .insert({
+          PersonID: personID,
+          Name: personName,
+          Address: personAddress,
+          DOB: personDOB,
+          LicenseNumber: personLicenseNum,
+          pExpiryDate: personExpiryDate
+     });
+}
