@@ -130,7 +130,7 @@ async function addVehicleData() {
      let vMake = "";
      let vModel = "";
      let vColour = "";
-     let vOwnerID = "";
+     let vOwnerID = null;
 
      // Get all input queries from form
      const vIDEl = document.getElementById("txtVehicleID");
@@ -166,11 +166,11 @@ async function addVehicleData() {
      if(exists === true) { // Add vehicle data if its owner exists
           const { error: addDataErr } = await supabase.from("Vehicles")
           .insert({
-               VehicleID: vID,
-               Make: vMake,
-               Model: vModel,
-               Colour: vColour,
-               OwnerID: vOwnerID
+               VehicleID: txtVehicleID,
+               Make: txtVehicleMake,
+               Model: txtVehicleModel,
+               Colour: txtVehicleColour,
+               OwnerID: txtVOwnerID
           });
           console.log("owner id existed");
      } else {  // Redirect to add owner if owner doesn't exist
