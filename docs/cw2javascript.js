@@ -151,9 +151,9 @@ async function updateVehicleResults() {
      if(checkPersonExists(vOwnerID) === true) { // Add vehicle data if its owner exists
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
      } else {
-          alert("The owner does not exist, redirecting to add owner information");
+          //alert("The owner does not exist, redirecting to add owner information");
           insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
-          window.location.href = "add-person.html"; // Redirect to add person page
+          //window.location.href = "add-person.html"; // Redirect to add person page
      }
      
      document.getElementById("vehicleForm").reset();
@@ -229,9 +229,11 @@ async function checkPersonExists(personID) {
      for (const owner of arrOwners) {
           console.log("arr id is " + owner.PersonID);
           if (owner.PersonID === personID) {
+               console.log("returns true");
                return true;
           }
      }
 
+     console.log("returns false");
      return false;
  }
