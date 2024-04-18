@@ -25,6 +25,8 @@ if (btnAddPerson) {
 
 async function updatePeopleResults() {
      let found = false;
+     let dNameEntered = false;
+     let lNumEntered = false;
      let driverName = "";
      let licenseNum = "";
      // Remove all existing search results
@@ -34,13 +36,25 @@ async function updatePeopleResults() {
      });
 
      // Declare result variables to append to DOM
-     const mainSect = document.querySelector("main");
+     const resultSect = document.querySelector("#results");
+     const messageSect = document.querySelector("#message");
      // Get input query for name
-     const driverNameElement = document.getElementById("txtDriverName"); // Get user input
+     const driverNameElement = document.getElementById("name"); // Get user input
      driverName = driverNameElement.value.trim().toLowerCase();
+     if(driverName !== "") { // Check if input field is entered
+          dNameEntered = true;
+     }
      // Get input query for license number
-     const licenseNumElement = document.getElementById("txtLicenseNum"); // Get user input
+     const licenseNumElement = document.getElementById("license"); // Get user input
      licenseNum = licenseNumElement.value.trim().toLowerCase();
+     if(licenseNum !== "") { // Check if input field is entered
+          lNumEntered = true;
+     }
+
+     if(lNumEntered === dNameEntered) {
+          messageSect.textContent = "Error";
+          return;
+     }
  
      const { data: arrPQuery, error: nameSelErr } = await supabase
           .from("People")
@@ -52,7 +66,7 @@ async function updatePeopleResults() {
           if ((pNameLower.includes(driverName) && driverName !== "") || (pLicenseNumLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
                const { data: arrPeople, error: allSelErr } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNumber);
-               const results = document.createElement("ul");
+               const results = document.createElement("div");
                results.id = "searchResults";
                
                for (const person of arrPeople) {
@@ -61,18 +75,17 @@ async function updatePeopleResults() {
                     fields.forEach(field => {
                          const li = document.createElement("li");
                          li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                         results.appendChild(li); // Append <li> to <ul>
+                         results.appendChild(li); // Append <li> to <div>
                     });
                }
-               mainSect.appendChild(results); // Append search result <div> to main section
+               resultSect.appendChild(results); // Append search result <div> to main section
           }
      }
 
-     if (found === false) {
-          const results = document.createElement("p");
-          results.id = "searchResults";
-          results.textContent = "No matches found";
-          mainSect.appendChild(results); // Append corresponding results
+     if(found === true) {
+          messageSect.textContent = "Search sucessful";
+     } else if (found === false) {
+          messageSect.textContent = "No result found";
      } 
  }
 
@@ -86,10 +99,16 @@ async function updateVehicleResults() {
      });
 
      // Declare result variables to append to DOM
-     const mainSect = document.querySelector("main");
+     const resultSect = document.querySelector("#results");
+     const messageSect = document.querySelector("message");
      // Get input query for registration number
-     const regNumElement = document.getElementById("txtRegNum"); // Get user input
+     const regNumElement = document.getElementById("rego"); // Get user input
      regNum = regNumElement.value.trim().toLowerCase();
+
+     if(regNum === "") { // Error if input is empty
+          messageSect.textContent = "Error";
+          return; 
+     }
  
      const { data: arrVQuery, error: numSelErr } = await supabase
           .from("Vehicles")
@@ -100,7 +119,7 @@ async function updateVehicleResults() {
           if (vRegNum.includes(regNum) && regNum !== "") {
                found = true;
                const { data: arrVehicles, error: allSelError } = await supabase.from("Vehicles").select().eq("VehicleID", vQuery.VehicleID);
-               const results = document.createElement("ul");
+               const results = document.createElement("div");
                results.id = "searchResults";
                
                for (const vehicle of arrVehicles) {
@@ -109,18 +128,17 @@ async function updateVehicleResults() {
                     fields.forEach(field => {
                          const li = document.createElement("li");
                          li.textContent = `${field}: ${vehicle[field]}`; // Populate <li> with field value
-                         results.appendChild(li); // Append <li> to <ul>
+                         results.appendChild(li); // Append <li> to <div>
                     });
                }
-               mainSect.appendChild(results); // Append search result <div> to main section
+               resultSect.appendChild(results); // Append search result <div> to main section
           }
      }
 
-     if (found === false) {
-          const results = document.createElement("p");
-          results.id = "searchResults";
-          results.textContent = "No matches found";
-          mainSect.appendChild(results); // Append corresponding results
+     if (found == true) {
+          messageSect.textContent = "Search sucessful";
+     } else if (found === false) {
+          messageSect.textContent = "No result found";
      } 
  }
 
@@ -131,13 +149,20 @@ async function addVehicleData() {
      let vModel = null;
      let vColour = null;
      let vOwnerID = null;
+     const messageSect = document.querySelector("message");
+
+     // // Remove extra fields (add owner related form)
+     // const existingForms = document.querySelectorAll("#personForm");
+     // existingForms.forEach(form => {
+     //      form.remove();
+     // });
 
      // Get all input queries from form
-     const vIDEl = document.getElementById("txtVehicleID");
-     const vMakeEl = document.getElementById("txtVehicleMake");
-     const vModelEl = document.getElementById("txtVehicleModel");
-     const vColourEl = document.getElementById("txtVehicleColour");
-     const vOwnerIDEl = document.getElementById("txtVOwnerID"); // Get user input
+     const vIDEl = document.getElementById("rego");
+     const vMakeEl = document.getElementById("make");
+     const vModelEl = document.getElementById("model");
+     const vColourEl = document.getElementById("colour");
+     const vOwnerIDEl = document.getElementById("owner"); // Get user input
      
      vID = vIDEl.value.trim();
      vMake = vMakeEl.value.trim();
@@ -151,8 +176,9 @@ async function addVehicleData() {
      if (!vColour) vColour = null;
      if (!vOwnerID) vOwnerID = null;
 
-     if (!vID) { // Check vehicle ID is entered
-          alert("VehicleID field is mandatory.");
+     if (!vID || !vMake || !vModel || !vColour || ! vOwnerID) { // Check vehicle ID is entered
+          alert("All fields are mandatory.");
+          messageSect.textContent = "Error";
           return;
      }
 
@@ -162,9 +188,7 @@ async function addVehicleData() {
           .select();
           
      for (const owner of arrOwners) {
-          console.log("arr id is " + owner.PersonID);
           if (String(owner.PersonID) === String(vOwnerID)) {
-               console.log("returns true");
                exists = true;
                break;
           }
@@ -179,11 +203,9 @@ async function addVehicleData() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
-          console.log("owner id existed");
+          messageSect.textContent = "Vehicle added sucessfully";
      } else {  // Redirect to add owner if owner doesn't exist
-          console.log("vowner exists = " + exists);
-          alert("The owner does not exist, redirecting to add owner information");
-          //insertVehicle(vID, vMake, vModel, vColour, vOwnerID);
+          alert("The owner does not exist, fill in new details to add");
           window.location.href = "add-person.html";
      }  
      // Reset input fields
@@ -201,14 +223,15 @@ async function addPersonData() {
      let pDOB = null;
      let pLicenseNum = null;
      let pExpiryDate = null;
+     const messageSect = document.querySelector("message");
 
      // Get all input queries from form
-     const pIDEl = document.getElementById("txtPersonID");
-     const pNameEl = document.getElementById("txtPersonName");
-     const pAddressEl = document.getElementById("txtPersonAddress"); // Get user input
-     const pDOBEl = document.getElementById("txtPersonDOB"); // Get user input
-     const pLicenseNumEl = document.getElementById("txtPersonLicenseNum"); // Get user input
-     const pExpiryDateEl = document.getElementById("txtPersonExpiryDate"); // Get user input
+     const pIDEl = document.getElementById("personid");
+     const pNameEl = document.getElementById("name");
+     const pAddressEl = document.getElementById("address"); // Get user input
+     const pDOBEl = document.getElementById("dob"); // Get user input
+     const pLicenseNumEl = document.getElementById("license"); // Get user input
+     const pExpiryDateEl = document.getElementById("expire"); // Get user input
 
      pID = pIDEl.value.trim();
      pName = pNameEl.value.trim();
@@ -219,6 +242,7 @@ async function addPersonData() {
 
      if (!pID || !pName || !pAddress || !pDOB || !pLicenseNum || !pExpiryDate) { // Check vehicle ID is entered
           alert("Please enter all fields.");
+          messageSect.textContent = "Error";
           return;
      }
 
@@ -229,9 +253,7 @@ async function addPersonData() {
           .select();
               
      for (const owner of arrOwners) {
-          console.log("arr id is " + owner.PersonID);
           if (String(owner.PersonID) === String(pID)) {
-               console.log("returns true");
                exists = true;
                break;
           }
@@ -247,12 +269,16 @@ async function addPersonData() {
                LicenseNumber: pLicenseNum,
                ExpiryDate: pExpiryDate
           });
-          console.log("Person id didnt existed");
      } else {
-          console.log("Person id existed");
           alert("This person already exists!");
+          messageSect.textContent = "Error";
           return;
      }
+
+     // Redirect back to vehicle form
+     alert("Owner added, returning to add a vehicle form");
+     window.location.href = "add-vehicle.html";
+
      // Reset fields
      pIDEl.value = "";
      pNameEl.value = "";

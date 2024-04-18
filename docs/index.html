@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="cw2styles.css" />
         <script src="cw2javascript.js" type="module" defer></script>
     </head>
-    <body>
+    <body id="container">
         <header>
             <h1>People Search</h1>
             <ul class="nav">
@@ -18,12 +18,12 @@
         </header>
         <main>
             <p>
-                <label for="txtDriverName">Search by driver name:</label>
-                <input type="text" id="txtDriverName" name="txtDriverName">
+                <label for="name">Search by driver name:</label>
+                <input type="text" id="name">
             </p>
             <p>
-                <label for="txtLicenseNum">Search by driving license number:</label>
-                <input type="text" id="txtLicenseNum" name="txtLicenseNum">
+                <label for="license">Search by driving license number:</label>
+                <input type="text" id="license">
             </p>
             <p>
                 <button type="button" id="btnPeopleQuery" name="btnPeopleQuery">Submit</button>
@@ -31,6 +31,8 @@
             <p>
                 <label>Query Results:</label>
             </p>
+            <p id="results"></p>
+            <p id="message"></p>
         </main>
         <aside>
             <img src='imgs/mogged.png'>

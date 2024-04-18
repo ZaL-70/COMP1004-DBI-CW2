@@ -1,7 +1,7 @@
 html {
     background-color: #d30000;
 }
-body {
+#container {
     display: grid;
     background-color: #002096e1;
     border-radius: 15px;
@@ -17,28 +17,28 @@ header {
     grid-column: 1 / 3;
     grid-row: 1; 
     text-align: center;
-    border: 5px solid #ffffff;
+    border: 1px solid black;
     color: #ffffff;
-    padding: 0;
-    margin: .35em;
+    padding: 10px;
+    margin: 10px;
 }
 
 main {
     background-color: #bda00d;
     grid-column: 2 / 3;
     grid-row: 2;
-    border: 4px solid #ffffff;
-    padding: 1.5em;
-    margin: .5em;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
 }
 
 aside {
     background-color: #bda00d;
     grid-column: 1 / 2;
     grid-row: 2;
-    border: 4px solid #ffffff;
-    padding: 1em;
-    margin: 0;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
 }
 
 footer {
@@ -46,9 +46,9 @@ footer {
     border-radius: 10px;
     grid-column: 1 / 3;
     grid-row: 3 ;
-    border: 4px solid #ffffff;
-    padding: 0;
-    margin: 0;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
 }
 
 .nav {

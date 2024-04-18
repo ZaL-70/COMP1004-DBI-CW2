@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="cw2styles.css" />
         <script src="cw2javascript.js" type="module"></script>
     </head>
-    <body>
+    <body id="container">
         <header>
             <h1>Add a vehicle</h1>
             <ul class = nav>
@@ -19,33 +19,34 @@
         <main>
             <div id="personForm">
                 <p>
-                    <label for="txtPersonID">Enter PersonID:</label>
-                    <input type="number" id="txtPersonID" name="txtPersonID" required>
+                    <label for="personid">Enter PersonID:</label>
+                    <input type="number" id="personid" required>
                 </p>
                 <p>
-                    <label for="txtPersonName">Enter person's name:</label>
-                    <input type="text" id="txtPersonName" name="txtPersonName" required>
+                    <label for="name">Enter person's name:</label>
+                    <input type="text" id="name" required>
                 </p>
                 <p>
-                    <label for="txtPersonAddress">Enter person's address:</label>
-                    <input type="text" id="txtPersonAddress" name="txtPersonAddress" required>
+                    <label for="address">Enter person's address:</label>
+                    <input type="text" id="address" required>
                 </p>
                 <p>
-                    <label for="txtPersonDOB">Enter person's DOB:</label>
-                    <input type="date" id="txtPersonDOB" name="txtPersonDOB" required>
+                    <label for="dob">Enter person's DOB:</label>
+                    <input type="date" id="dob" required>
                 </p>
                 <p>
-                    <label for="txtPersonLicenseNum">Enter person's license number:</label>
-                    <input type="text" id="txtPersonLicenseNum" name="txtPersonLicenseNum" required>
+                    <label for="license">Enter person's license number:</label>
+                    <input type="text" id="license" required>
                 </p>
                 <p>
-                    <label for="txtPersonExpiryDate">Enter expiry date:</label>
-                    <input type="date" id="txtPersonExpiryDate" name="txtPersonExpiryDate" required>
+                    <label for="expire">Enter expiry date:</label>
+                    <input type="date" id="expire" required>
                 </p>
                 <p>
-                    <button type="button" id="btnAddPerson">Submit</button>
+                    <button type="button" id="btnAddPerson">Add owner</button>
                 </p>
             </div>
+            <p id="message"></p>
         </main>
         <aside>
             <img src = 'imgs/leader.png'>

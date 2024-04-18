@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="cw2styles.css" />
         <script src="cw2javascript.js" type="module"></script>
     </head>
-    <body>
+    <body id="container">
         <header>
             <h1>Add a vehicle</h1>
             <ul class = nav>
@@ -19,29 +19,30 @@
         <main>
             <div id="vehicleForm">
                 <p>
-                    <label for="txtVehicleID">Enter VehicleID:</label>
-                    <input type="text" id="txtVehicleID" name="txtVehicleID" required>
+                    <label for="rego">Enter VehicleID:</label>
+                    <input type="text" id="rego" required>
                 </p>
                 <p>
-                    <label for="txtVehicleMake">Enter vehicle make:</label>
-                    <input type="text" id="txtVehicleMake" name="txtVehicleMake">
+                    <label for="make">Enter vehicle make:</label>
+                    <input type="text" id="make" required>
                 </p>
                 <p>
-                    <label for="txtVehicleModel">Enter vehicle model:</label>
-                    <input type="text" id="txtVehicleModel" name="txtVehicleModel">
+                    <label for="model">Enter vehicle model:</label>
+                    <input type="text" id="model" required>
                 </p>
                 <p>
-                    <label for="txtVehicleColour">Enter vehicle colour:</label>
-                    <input type="text" id="txtVehicleColour" name="txtVehicleColour">
+                    <label for="colour">Enter vehicle colour:</label>
+                    <input type="text" id="colour" required>
                 </p>
                 <p>
-                    <label for="txtVOwnerID">Enter OwnerID:</label>
-                    <input type="number" id="txtVOwnerID" name="txtVOwnerID">
+                    <label for="owner">Enter OwnerID:</label>
+                    <input type="number" id="owner" required>
                 </p>
                 <p>
-                    <button type="button" id="btnAddVehicle">Submit</button>
+                    <button type="button" id="btnAddVehicle">Add</button>
                 </p>
             </div>
+            <p id="message"></p>
         </main>
         <aside>
             <img src = 'imgs/arsenal-ocatane.png'>
