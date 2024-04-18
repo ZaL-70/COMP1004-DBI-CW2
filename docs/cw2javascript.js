@@ -83,7 +83,7 @@ async function updatePeopleResults() {
      }
 
      if(found === true) {
-          messageSect.textContent = "Search sucsessful";
+          messageSect.textContent = "Search successful";
      } else if (found === false) {
           messageSect.textContent = "No result found";
      } 
