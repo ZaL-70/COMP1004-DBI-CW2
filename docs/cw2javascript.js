@@ -100,7 +100,7 @@ async function updateVehicleResults() {
 
      // Declare result variables to append to DOM
      const resultSect = document.querySelector("#results");
-     const messageSect = document.querySelector("message");
+     const messageSect = document.querySelector("#message");
      // Get input query for registration number
      const regNumElement = document.getElementById("rego"); // Get user input
      regNum = regNumElement.value.trim().toLowerCase();
@@ -149,7 +149,7 @@ async function addVehicleData() {
      let vModel = null;
      let vColour = null;
      let vOwnerID = null;
-     const messageSect = document.querySelector("message");
+     const messageSect = document.querySelector("#message");
 
      // // Remove extra fields (add owner related form)
      // const existingForms = document.querySelectorAll("#personForm");
@@ -223,7 +223,7 @@ async function addPersonData() {
      let pDOB = null;
      let pLicenseNum = null;
      let pExpiryDate = null;
-     const messageSect = document.querySelector("message");
+     const messageSect = document.querySelector("#message");
 
      // Get all input queries from form
      const pIDEl = document.getElementById("personid");
