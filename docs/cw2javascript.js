@@ -83,7 +83,7 @@ async function updatePeopleResults() {
      }
 
      if(found === true) {
-          messageSect.textContent = "Search sucessful";
+          messageSect.textContent = "Search sucsessful";
      } else if (found === false) {
           messageSect.textContent = "No result found";
      } 
@@ -136,7 +136,7 @@ async function updateVehicleResults() {
      }
 
      if (found == true) {
-          messageSect.textContent = "Search sucessful";
+          messageSect.textContent = "Search successful";
      } else if (found === false) {
           messageSect.textContent = "No result found";
      } 
@@ -203,7 +203,7 @@ async function addVehicleData() {
                Colour: vColour,
                OwnerID: vOwnerID
           });
-          messageSect.textContent = "Vehicle added sucessfully";
+          messageSect.textContent = "Vehicle added successfully";
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, fill in new details to add");
           window.location.href = "add-person.html";
