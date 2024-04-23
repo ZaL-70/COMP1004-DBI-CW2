@@ -16,7 +16,7 @@ Modifications for accessibility:
 ### CSS
 
 Modifications for responsiveness:
-- Modified lines 74-120 redefine some of the html classes/elements to change the look when the screen is 500px or less
+- Modified lines 74-120 of cw2styles.css to redefine some of the html classes/elements to change the look when the screen is 500px or less
 
 ### JavaScript
 
