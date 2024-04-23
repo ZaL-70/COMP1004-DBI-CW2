@@ -23,60 +23,102 @@ if (btnAddPerson) {
     btnAddPerson.addEventListener("click", addPersonData);
 }
 
+// Helper function to remove page search results
+function removeAllResults() {
+     const existingResults = document.querySelectorAll("#searchResults");
+     existingResults.forEach(result => {
+          result.remove();
+     });
+}
+
+// Helper function to return array of all people records
+async function fetchAllPeopleData() {
+     const { data: arrPAll, error: nameSelErr } = await supabase
+     .from("People")
+     .select();
+
+     return arrPAll;
+}
+
+// Helper function to return array of all vehicle records
+async function fetchAllVehicleData() {
+     const { data: arrVAll, error: numSelErr } = await supabase
+     .from("Vehicles")
+     .select();
+
+     return arrVAll;
+}
+
+// Helper function to check a specified owner exists based on id. Returns existence status
+async function checkOwnerExists(id) {
+     let exists = false;
+     const arrOwners = await fetchAllPeopleData(); // Select all people data
+
+     for (const owner of arrOwners) {
+          if (String(owner.PersonID) === String(id)) {
+               exists = true;
+               break;
+          }
+     }
+
+     return exists;
+}
+
+// Function for getting people search results based on driver name/license number query
 async function updatePeopleResults() {
      let found = false;
      let dNameEntered = false;
      let lNumEntered = false;
      let driverName = "";
      let licenseNum = "";
-     // Remove all existing search results
-     const existingResults = document.querySelectorAll("#searchResults");
-     existingResults.forEach(result => {
-          result.remove();
-     });
 
-     // Declare result variables to append to DOM
+     removeAllResults(); // Remove all existing search results
+
+     // Get relevant DOM sections to use later
      const resultSect = document.querySelector("#results");
      const messageSect = document.querySelector("#message");
      // Get input query for name
-     const driverNameElement = document.getElementById("name"); // Get user input
+     const driverNameElement = document.getElementById("name");
      driverName = driverNameElement.value.trim().toLowerCase();
      if(driverName !== "") { // Check if input field is entered
           dNameEntered = true;
      }
+
      // Get input query for license number
-     const licenseNumElement = document.getElementById("license"); // Get user input
+     const licenseNumElement = document.getElementById("license"); 
      licenseNum = licenseNumElement.value.trim().toLowerCase();
      if(licenseNum !== "") { // Check if input field is entered
           lNumEntered = true;
      }
 
-     if(lNumEntered === dNameEntered) {
+     if(lNumEntered === dNameEntered) { // Return error if both are empty/entered
           messageSect.textContent = "Error";
           return;
      }
  
-     const { data: arrPQuery, error: nameSelErr } = await supabase
-          .from("People")
-          .select(); // Get name/license number data
-     // Check if the input is a substring of any name
-     for (const pQuery of arrPQuery) {
+     const arrPAll = await fetchAllPeopleData(); // Get all people data
+
+     for (const pQuery of arrPAll) { // Loop through each person record
           let pNameLower = pQuery.Name.toLowerCase();
           let pLicenseNumLower = pQuery.LicenseNumber.toLowerCase();
+          // Check if the inputs are a substring of any driver name/license number
           if ((pNameLower.includes(driverName) && driverName !== "") || (pLicenseNumLower.includes(licenseNum) && licenseNum !== "")) {
                found = true;
+               // Select all matching person data to use as the results array
                const { data: arrPeople, error: allSelErr } = await supabase.from("People").select().eq("Name", pQuery.Name || "LicenseNumber", pQuery.LicenseNumber);
                const results = document.createElement("div");
                results.id = "searchResults";
                
-               for (const person of arrPeople) {
-                    // Create <li> elements for each field and populate them with the field value
+               for (const person of arrPeople) { // Loop through each person record in results array
+                    const ul = document.createElement("ul");
                     const fields = ["PersonID", "Name", "Address", "DOB", "LicenseNumber", "ExpiryDate"];
+                    // Create <li> elements for each field and populate them with the field value
                     fields.forEach(field => {
                          const li = document.createElement("li");
                          li.textContent = `${field}: ${person[field]}`; // Populate <li> with field value
-                         results.appendChild(li); // Append <li> to <div>
+                         ul.appendChild(li); // Append <li> to <ul>
                     });
+                    results.appendChild(ul); // Append <ul> to <div>
                }
                resultSect.appendChild(results); // Append search result <div> to main section
           }
@@ -89,47 +131,48 @@ async function updatePeopleResults() {
      } 
  }
 
+// Function for getting vehicle search results based on registration number query
 async function updateVehicleResults() {
      let found = false;
      let regNum = "";
-     // Remove all existing search results
-     const existingResults = document.querySelectorAll("#searchResults");
-     existingResults.forEach(result => {
-          result.remove();
-     });
 
-     // Declare result variables to append to DOM
+     removeAllResults(); // Remove all existing search results
+
+     // Get relevant DOM sections to use later
      const resultSect = document.querySelector("#results");
      const messageSect = document.querySelector("#message");
+
      // Get input query for registration number
      const regNumElement = document.getElementById("rego"); // Get user input
      regNum = regNumElement.value.trim().toLowerCase();
 
-     if(regNum === "") { // Error if input is empty
+     if(regNum === "") { // Return error if both are empty/entered
           messageSect.textContent = "Error";
           return; 
      }
  
-     const { data: arrVQuery, error: numSelErr } = await supabase
-          .from("Vehicles")
-          .select(); // Get name/license number data
-     // Check if the input is a substring of any name
-     for (const vQuery of arrVQuery) {
+     const arrVAll = await fetchAllVehicleData(); // Get all vehicle data
+     
+     for (const vQuery of arrVAll) { // Loop through each vehicle record
           let vRegNum = vQuery.VehicleID.toLowerCase();
+          // Check if the input is a substring of any name
           if (vRegNum.includes(regNum) && regNum !== "") {
                found = true;
+               // Select all matching vehicle data to use as the results array
                const { data: arrVehicles, error: allSelError } = await supabase.from("Vehicles").select().eq("VehicleID", vQuery.VehicleID);
                const results = document.createElement("div");
                results.id = "searchResults";
                
-               for (const vehicle of arrVehicles) {
-                    // Create <li> elements for each field and populate them with the field value
+               for (const vehicle of arrVehicles) { // Loop through each vehicle record in results array
+                    const ul = document.createElement("ul");
                     const fields = ["VehicleID", "Make", "Model", "Colour", "OwnerID"];
                     fields.forEach(field => {
+                         // Create <li> elements for each field and populate them with the field value
                          const li = document.createElement("li");
                          li.textContent = `${field}: ${vehicle[field]}`; // Populate <li> with field value
-                         results.appendChild(li); // Append <li> to <div>
+                         ul.appendChild(li); // Append <li> to <ul>
                     });
+                    results.appendChild(ul); // Append <ul> to <div>
                }
                resultSect.appendChild(results); // Append search result <div> to main section
           }
@@ -142,6 +185,7 @@ async function updateVehicleResults() {
      } 
  }
 
+// Function for adding specified vehicle data based on the input form data
 async function addVehicleData() {
      let exists = false;
      let vID = null;
@@ -151,24 +195,19 @@ async function addVehicleData() {
      let vOwnerID = null;
      const messageSect = document.querySelector("#message");
 
-     // // Remove extra fields (add owner related form)
-     // const existingForms = document.querySelectorAll("#personForm");
-     // existingForms.forEach(form => {
-     //      form.remove();
-     // });
-
      // Get all input queries from form
      const vIDEl = document.getElementById("rego");
      const vMakeEl = document.getElementById("make");
      const vModelEl = document.getElementById("model");
      const vColourEl = document.getElementById("colour");
-     const vOwnerIDEl = document.getElementById("owner"); // Get user input
+     const vOwnerIDEl = document.getElementById("owner");
      
+     // Assign query inputs to variables
      vID = vIDEl.value.trim();
      vMake = vMakeEl.value.trim();
      vModel = vModelEl.value.trim();
      vColour = vColourEl.value.trim();
-     vOwnerID = vOwnerIDEl.value.trim(); // Assign inputs to variables
+     vOwnerID = vOwnerIDEl.value.trim();
 
      // Set empty values to null
      if (!vMake) vMake = null;
@@ -176,23 +215,15 @@ async function addVehicleData() {
      if (!vColour) vColour = null;
      if (!vOwnerID) vOwnerID = null;
 
-     if (!vID || !vMake || !vModel || !vColour || ! vOwnerID) { // Check vehicle ID is entered
+     // Check every field is entered, return error if not
+     if (!vID || !vMake || !vModel || !vColour || ! vOwnerID) {
           alert("All fields are mandatory.");
           messageSect.textContent = "Error";
           return;
      }
 
-     // Check if the owner ID exists
-     const { data: arrOwners, error: checkErr } = await supabase
-          .from("People")
-          .select();
-          
-     for (const owner of arrOwners) {
-          if (String(owner.PersonID) === String(vOwnerID)) {
-               exists = true;
-               break;
-          }
-     }
+     // Check if the owner ID exists in any owner record
+     exists = await checkOwnerExists(vOwnerID);
 
      if(exists === true) { // Add vehicle data if its owner exists
           const { error: addDataErr } = await supabase.from("Vehicles")
@@ -207,7 +238,8 @@ async function addVehicleData() {
      } else {  // Redirect to add owner if owner doesn't exist
           alert("The owner does not exist, fill in new details to add");
           window.location.href = "add-person.html";
-     }  
+     }
+
      // Reset input fields
      vIDEl.value = "";
      vMakeEl.value = "";
@@ -217,6 +249,7 @@ async function addVehicleData() {
  }
 
 async function addPersonData() {
+     let exists = false;
      let pID = null;
      let pName = null;
      let pAddress = null;
@@ -233,31 +266,23 @@ async function addPersonData() {
      const pLicenseNumEl = document.getElementById("license"); // Get user input
      const pExpiryDateEl = document.getElementById("expire"); // Get user input
 
+     // Assign query inputs to variables
      pID = pIDEl.value.trim();
      pName = pNameEl.value.trim();
      pAddress = pAddressEl.value.trim();
      pDOB = pDOBEl.value.trim();
      pLicenseNum = pLicenseNumEl.value.trim();
-     pExpiryDate = pExpiryDateEl.value.trim(); // Assign inputs to variables
+     pExpiryDate = pExpiryDateEl.value.trim();
 
-     if (!pID || !pName || !pAddress || !pDOB || !pLicenseNum || !pExpiryDate) { // Check vehicle ID is entered
+     // Check every field is entered, return error if not
+     if (!pID || !pName || !pAddress || !pDOB || !pLicenseNum || !pExpiryDate) {
           alert("Please enter all fields.");
           messageSect.textContent = "Error";
           return;
      }
-
-     // Check if the person ID exists
-     const exists = false;
-     const { data: arrOwners, error: checkErr } = await supabase
-          .from("People")
-          .select();
               
-     for (const owner of arrOwners) {
-          if (String(owner.PersonID) === String(pID)) {
-               exists = true;
-               break;
-          }
-     }
+     // Check if the person ID exists in any person record
+     exists = await checkOwnerExists(pID);
 
      if(exists === false) { // Add person data if its person not added yet
           const { error: addDataErr } = await supabase.from("People")
