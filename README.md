@@ -7,12 +7,16 @@
 ### HTML
 
 Modifications for accessibility:
-- Line 5 of each .html file uses name viewport with height and width to manually adjust based on the device
+- Modified line 5 of each .html file uses name viewport with height and width to manually adjust based on the deviceModified line 53 of add-person.html to include alt description
+- Modified line 39 of index.html to include alt description
+- Modified line 35 of vehicle-search.html to include alt description
+- Modified line 49 of add-vehicle.html to include alt description
+- Modified line 53 of add-person.html to include alt description
 
 ### CSS
 
 Modifications for responsiveness:
-- Lines 74-120 redefine some of the html classes/elements to change the look when the screen is 500px or less
+- Modified lines 74-120 redefine some of the html classes/elements to change the look when the screen is 500px or less
 
 ### JavaScript
 
